@@ -23,13 +23,13 @@ WHERE P.ListPrice >0 AND P.Color='Blue'
 ORDER BY P.ListPrice DESC
 OFFSET 19 ROWS FETCH NEXT 30 ROWS ONLY
 
-SELECT P.Name, P.Color, COALESCE(P.Color,'szintelen') as 'szín'
+SELECT P.Name, P.Color, COALESCE(P.Color,'szÃ­ntelen') as 'szï¿½n'
 FROM Production.product P
 
 select P.name, P.SellEndDate, COALESCE(P.SellEndDate,'1990.10.10')
 from Production.Product P
 
-SELECT P.Name, COALESCE(P.Sellenddate,'Nem áruljuk')
+SELECT P.Name, COALESCE(P.Sellenddate,'Nem ï¿½ruljuk')
 FROM Production.Product P
 
 SELECT P.FirstName, P.MiddleName, P.LastName, 
@@ -77,5 +77,5 @@ WHERE IIF(ISNUMERIC(P.size)=1, P.Size, Case P.size	when 'M' THEN 40
 					end) =40
 
 
-DECLARE @összeg varchar(30) = '1350.20'
-	SELECT @összeg, Parse(@összeg as decimal using 'hu-hu')
+DECLARE @ï¿½sszeg varchar(30) = '1350.20'
+	SELECT @ï¿½sszeg, Parse(@ï¿½sszeg as decimal using 'hu-hu')

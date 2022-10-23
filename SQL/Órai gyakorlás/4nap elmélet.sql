@@ -1,127 +1,127 @@
 /*
-Adattípusok és kapcsolódó függvények
+Adattï¿½pusok ï¿½s kapcsolï¿½dï¿½ fï¿½ggvï¿½nyek
 
-Mint minden programnyelvben az SQL-ben is minden értékhez hozzátartozik valamilyen adattípus ilyen szempontból mindegy, hogy változótról vagy egy adattábla mezõjérõl van szó. 
-Az adattípus sok esetben meghatározza, hogy milyen mûveletek és hogyan hajthatóak végre az adott értékkel.
-Például ha van két változónk amiknek az értéke '1' és azok valamilyen számtípusként vannak definiálva akkor változó1 + változó2 =2,
-viszont ha szövegtípusként vannak deklarálva akkor változó1 + változó2=11 mivel szöveg esetén T-SQL-ben a + jel összefûzést jelent.
+Mint minden programnyelvben az SQL-ben is minden ï¿½rtï¿½khez hozzï¿½tartozik valamilyen adattï¿½pus ilyen szempontbï¿½l mindegy, hogy vï¿½ltozï¿½trï¿½l vagy egy adattï¿½bla mezï¿½jï¿½rï¿½l van szï¿½. 
+Az adattï¿½pus sok esetben meghatï¿½rozza, hogy milyen mï¿½veletek ï¿½s hogyan hajthatï¿½ak vï¿½gre az adott ï¿½rtï¿½kkel.
+Pï¿½ldï¿½ul ha van kï¿½t vï¿½ltozï¿½nk amiknek az ï¿½rtï¿½ke '1' ï¿½s azok valamilyen szï¿½mtï¿½puskï¿½nt vannak definiï¿½lva akkor vï¿½ltozï¿½1 + vï¿½ltozï¿½2 =2,
+viszont ha szï¿½vegtï¿½puskï¿½nt vannak deklarï¿½lva akkor vï¿½ltozï¿½1 + vï¿½ltozï¿½2=11 mivel szï¿½veg esetï¿½n T-SQL-ben a + jel ï¿½sszefï¿½zï¿½st jelent.
 
-Amikor adatokkal dolgozunk gyakran szükséges, hogy ezeket az adattípusokat konvertáljuk. 
-Az SQL ebben segítségünkre van és sok esetben ezt automatikusan megteszi. Azonban vannak helyzetek, amikor errõl nekünk kell gondoskodni. 
-Természetesen nem mindent lehet mindenné átkonvertálni. Ezt a következõ táblázat foglalja össze, illetve az alatta lévõ linken találhattok további információkat.
+Amikor adatokkal dolgozunk gyakran szï¿½ksï¿½ges, hogy ezeket az adattï¿½pusokat konvertï¿½ljuk. 
+Az SQL ebben segï¿½tsï¿½gï¿½nkre van ï¿½s sok esetben ezt automatikusan megteszi. Azonban vannak helyzetek, amikor errï¿½l nekï¿½nk kell gondoskodni. 
+Termï¿½szetesen nem mindent lehet mindennï¿½ ï¿½tkonvertï¿½lni. Ezt a kï¿½vetkezï¿½ tï¿½blï¿½zat foglalja ï¿½ssze, illetve az alatta lï¿½vï¿½ linken talï¿½lhattok tovï¿½bbi informï¿½ciï¿½kat.
 
-T-SQL adattípus konverzió
-A konvertálásra több függvényünk is van. A CAST() és a CONVERT() függvények közel teljesen egyenértékûek alapszinten,
-a CONVERT a nyelvfüggû beállításoknál rendelkezik extra funkcióval cserébe a CAST több SQL nyelvben használatos míg a CONVERT nem. 
-A szintaktikájuk eltérõ, ami a következõképpen néz ki. CAST(konvertálandó AS adattípus) a CAST esetében fontos, hogy itt az AS szó nem hagyható el mindig ki kell írni.
-A CONVERT(adattípus, konvertálandó) szintaktikája a fordítottja a CAST-énak. A kovertáladó lehet változó mezõ stb. 
-Az adattípus mindkét esetben az az adattípus amire konvertálni szeretnénk. Fontos még megjegyezni, hogy vannak korlátai annak milyen adattípusokra lehet konvertálni.
-A következõ kis példában a termékek méretét próbáljuk meg számmá konvertálni.
+T-SQL adattï¿½pus konverziï¿½
+A konvertï¿½lï¿½sra tï¿½bb fï¿½ggvï¿½nyï¿½nk is van. A CAST() ï¿½s a CONVERT() fï¿½ggvï¿½nyek kï¿½zel teljesen egyenï¿½rtï¿½kï¿½ek alapszinten,
+a CONVERT a nyelvfï¿½ggï¿½ beï¿½llï¿½tï¿½soknï¿½l rendelkezik extra funkciï¿½val cserï¿½be a CAST tï¿½bb SQL nyelvben hasznï¿½latos mï¿½g a CONVERT nem. 
+A szintaktikï¿½juk eltï¿½rï¿½, ami a kï¿½vetkezï¿½kï¿½ppen nï¿½z ki. CAST(konvertï¿½landï¿½ AS adattï¿½pus) a CAST esetï¿½ben fontos, hogy itt az AS szï¿½ nem hagyhatï¿½ el mindig ki kell ï¿½rni.
+A CONVERT(adattï¿½pus, konvertï¿½landï¿½) szintaktikï¿½ja a fordï¿½tottja a CAST-ï¿½nak. A kovertï¿½ladï¿½ lehet vï¿½ltozï¿½ mezï¿½ stb. 
+Az adattï¿½pus mindkï¿½t esetben az az adattï¿½pus amire konvertï¿½lni szeretnï¿½nk. Fontos mï¿½g megjegyezni, hogy vannak korlï¿½tai annak milyen adattï¿½pusokra lehet konvertï¿½lni.
+A kï¿½vetkezï¿½ kis pï¿½ldï¿½ban a termï¿½kek mï¿½retï¿½t prï¿½bï¿½ljuk meg szï¿½mmï¿½ konvertï¿½lni.
 */
 
 SELECT P.Name, P.Size, CAST(P.size AS decimal) sizeint
 FROM Production.product P
 
-/*Azt fogjuk tapasztalni, hogy a függvényünk csinál néhány furcsaságot annak függvényében, hogy az adott rekordban milyen érték van a size mezõben. - Ha szám volt benne akkor gond nélkül átkonvertálja - Ha NULL volt az értéke akkor konverzió után is NULL lesz. - Ha szöveg volt akkor viszont a konverzió hibára fut. - Az utóbbi esetekre kínál megoldást a TRY_CAST() és a TRY_CONVERT(). A szintaktikájuk ugyanaz mint az alapváltozatoknak, de ha nem konvertálható értékkel találkoznak, akkor nem szállnak el hibával, hanem NULL értékkel térnek vissza. A TRY verziók ugyan megoldják, hogy ne fusson hibára a kódunk, de bánjunk vele körültekintõen. A konvertált adatokkal további mûveleteket fogunk végezni és a NULL nem egyenlõ egy konkrét értékkel.
-A konverzióra van még egy különleges parancsunk a PARSE() és annak a TRY_PARSE() verziója. Szintén konverziós függvények viszont a CAST-al ellentétben meg lehet adni a kultúrát/nyelvet és lekezeli az ebbõl fakadó eltéréseket. Az olyen esetekben mint a pénznem típusra konvertálás a CAST függvény helytelen eredményt adhat mert nem veszi figyelembe a nyelvi sajátosságokat. Ilyenkor kell nekünk a PARSE, amit csak string szám vagy date/time típusokká konvertálására lehet használni.
-Az alábbi kis példa mutatja meg a PARSE használatát egy változón.
+/*Azt fogjuk tapasztalni, hogy a fï¿½ggvï¿½nyï¿½nk csinï¿½l nï¿½hï¿½ny furcsasï¿½got annak fï¿½ggvï¿½nyï¿½ben, hogy az adott rekordban milyen ï¿½rtï¿½k van a size mezï¿½ben. - Ha szï¿½m volt benne akkor gond nï¿½lkï¿½l ï¿½tkonvertï¿½lja - Ha NULL volt az ï¿½rtï¿½ke akkor konverziï¿½ utï¿½n is NULL lesz. - Ha szï¿½veg volt akkor viszont a konverziï¿½ hibï¿½ra fut. - Az utï¿½bbi esetekre kï¿½nï¿½l megoldï¿½st a TRY_CAST() ï¿½s a TRY_CONVERT(). A szintaktikï¿½juk ugyanaz mint az alapvï¿½ltozatoknak, de ha nem konvertï¿½lhatï¿½ ï¿½rtï¿½kkel talï¿½lkoznak, akkor nem szï¿½llnak el hibï¿½val, hanem NULL ï¿½rtï¿½kkel tï¿½rnek vissza. A TRY verziï¿½k ugyan megoldjï¿½k, hogy ne fusson hibï¿½ra a kï¿½dunk, de bï¿½njunk vele kï¿½rï¿½ltekintï¿½en. A konvertï¿½lt adatokkal tovï¿½bbi mï¿½veleteket fogunk vï¿½gezni ï¿½s a NULL nem egyenlï¿½ egy konkrï¿½t ï¿½rtï¿½kkel.
+A konverziï¿½ra van mï¿½g egy kï¿½lï¿½nleges parancsunk a PARSE() ï¿½s annak a TRY_PARSE() verziï¿½ja. Szintï¿½n konverziï¿½s fï¿½ggvï¿½nyek viszont a CAST-al ellentï¿½tben meg lehet adni a kultï¿½rï¿½t/nyelvet ï¿½s lekezeli az ebbï¿½l fakadï¿½ eltï¿½rï¿½seket. Az olyen esetekben mint a pï¿½nznem tï¿½pusra konvertï¿½lï¿½s a CAST fï¿½ggvï¿½ny helytelen eredmï¿½nyt adhat mert nem veszi figyelembe a nyelvi sajï¿½tossï¿½gokat. Ilyenkor kell nekï¿½nk a PARSE, amit csak string szï¿½m vagy date/time tï¿½pusokkï¿½ konvertï¿½lï¿½sï¿½ra lehet hasznï¿½lni.
+Az alï¿½bbi kis pï¿½lda mutatja meg a PARSE hasznï¿½latï¿½t egy vï¿½ltozï¿½n.
 */
    
-DECLARE @összeg varchar(30) = '1350,20'
-SELECT @összeg, Parse(@összeg as money using 'hu-hu')
+DECLARE @ï¿½sszeg varchar(30) = '1350,20'
+SELECT @ï¿½sszeg, Parse(@ï¿½sszeg as money using 'hu-hu')
 
 /*
-Szöveg függvények
+Szï¿½veg fï¿½ggvï¿½nyek
 
-Összegyûjtöttünk néhány olyan függvényt ami a szöveg típusú adatokhoz használható. 
-Ezek megfelelõi sok más programnyelvben megjelennek. 
-A legfontosabb közülük talán a szöveg összefûzésére szolgáló CONCAT() függvény, ami nem csinál mást, mint a megadott szövegeket vagy kifejezések értékét összefûzi egymás után. 
-Fontos kitétel, hogyha bármely összefûzni kívánt kifejezés értéke NULL akkor a CONCAT eredménye is NULL lesz. 
-Természetesen erre is van megoldás, amit majd a NULL kezelés témakörében fogunk megnézni.
-Az alábbi kis példa a termék nevét és színét fûzi össze egyetlen karakterlánccá.
+ï¿½sszegyï¿½jtï¿½ttï¿½nk nï¿½hï¿½ny olyan fï¿½ggvï¿½nyt ami a szï¿½veg tï¿½pusï¿½ adatokhoz hasznï¿½lhatï¿½. 
+Ezek megfelelï¿½i sok mï¿½s programnyelvben megjelennek. 
+A legfontosabb kï¿½zï¿½lï¿½k talï¿½n a szï¿½veg ï¿½sszefï¿½zï¿½sï¿½re szolgï¿½lï¿½ CONCAT() fï¿½ggvï¿½ny, ami nem csinï¿½l mï¿½st, mint a megadott szï¿½vegeket vagy kifejezï¿½sek ï¿½rtï¿½kï¿½t ï¿½sszefï¿½zi egymï¿½s utï¿½n. 
+Fontos kitï¿½tel, hogyha bï¿½rmely ï¿½sszefï¿½zni kï¿½vï¿½nt kifejezï¿½s ï¿½rtï¿½ke NULL akkor a CONCAT eredmï¿½nye is NULL lesz. 
+Termï¿½szetesen erre is van megoldï¿½s, amit majd a NULL kezelï¿½s tï¿½makï¿½rï¿½ben fogunk megnï¿½zni.
+Az alï¿½bbi kis pï¿½lda a termï¿½k nevï¿½t ï¿½s szï¿½nï¿½t fï¿½zi ï¿½ssze egyetlen karakterlï¿½nccï¿½.
 */
 
-SELECT P.Name, P.Color, CONCAT (P.name, P.Color)  as 'termék és szín'
+SELECT P.Name, P.Color, CONCAT (P.name, P.Color)  as 'termï¿½k ï¿½s szï¿½n'
 FROM Production.product P
 
 /*
-A következõ 3 fügvényt olyankor használjuk, amikor egy szöveg egy részére van szükségünk. 
-Ezek a LEFT() a RIGHT() és a SUBSTRING(). Az elõbbi kettõ elég egyértelmû a SUBSTRING segítségével pedig egy karakterlánc közepérõl szedhetünk ki karaktereket. 
-A szintaktikájuk a következõ: LEFT()(szöveg, karakterek száma) Balról kezdve ad vissza megadott számú karaktert. 
-RIGHT() (szöveg, karakterek száma) A szöveg végérõl indulva add vissza megadott számú karaktert. 
-SUBSTRING() (szöveg, honnantól,mennyit) A megadott számú karaktertõl kezdve ad vissza megadott számú karaktert.
-Az alábbi kis példa nem fog értelmes adatot visszaadni, de arra jó, hogy lássuk a szintaktikát élõben.
+A kï¿½vetkezï¿½ 3 fï¿½gvï¿½nyt olyankor hasznï¿½ljuk, amikor egy szï¿½veg egy rï¿½szï¿½re van szï¿½ksï¿½gï¿½nk. 
+Eze a LEFT() a RIGHT() ï¿½s a SUBSTRING(). Az elï¿½bbi kettï¿½ elï¿½g egyï¿½rtelmï¿½ a SUBSTRING segï¿½tsï¿½gï¿½vel pedig egy karakterlï¿½nc kï¿½zepï¿½rï¿½l szedhetï¿½nk ki karaktereket.
+A szintaktikï¿½juk a kï¿½vetkezï¿½: LEFT()(szï¿½veg, karakterek szï¿½ma) Balrï¿½l kezdve ad vissza megadott szï¿½mï¿½ karaktert. 
+RIGHT() (szï¿½veg, karakterek szï¿½ma) A szï¿½veg vï¿½gï¿½rï¿½l indulva add vissza megadott szï¿½mï¿½ karaktert. 
+SUBSTRING() (szï¿½veg, honnantï¿½l,mennyit) A megadott szï¿½mï¿½ karaktertï¿½l kezdve ad vissza megadott szï¿½mï¿½ karaktert.
+Az alï¿½bbi kis pï¿½lda nem fog ï¿½rtelmes adatot visszaadni, de arra jï¿½, hogy lï¿½ssuk a szintaktikï¿½t ï¿½lï¿½ben.
 */
 
-SELECT P.name, LEFT(P.name,5) eleje, RIGHT(P.name, 4) vége, SUBSTRING(P.name,3,3) közepe
+SELECT P.name, LEFT(P.name,5) eleje, RIGHT(P.name, 4) vï¿½ge, SUBSTRING(P.name,3,3) kï¿½zepe
 FROM Production.product P
 /*
-A következõ csoportba néhány olyan függvényt soroltunk, amik a karakterlánc hosszát valamint a közök ' ' eltávolítását teszik lehetõvé.
-DATALENGTH (szöveg) Egy karakterlánc karaktereinek számát adja vissza közökkel együtt. LEN (szöveg) Ugyanaz mint a DATALENGTH, de a karakterlánc végén lévõ közöket nem számolja bele. 
-LTRIM (szöveg) Levágja a karakterlánc elejérõl a fölösleges közöket. RTRIM(szöveg) Levágja a fölösleges közöket egy karakterlánc végérõl. TRIM (szöveg) 2017 óta használható. 
-A karakterlánc mindkét végérõl levágja a fölösleges közöket.
-Végül pedig a CHARINDEX(), amit bár gyakran használunk a közök kezeléséhez egy karakterláncban de ennél többet tud. 
-A CHARINDEX segítségével egy szövegrészre kereshetünk rá egy karakterláncban és visszaadja, hogy hányadik karakternél találta meg.
-A számolást 1-tõl kezdi. Ha nem találja meg a keresett szövegrészt, akkor 0 értékkel tér vissza. 
-Nézzünk is egy gyakorlati példát a karakterfüggvények használatára. 
-Gyakran elõfordul, hogy a vezetéknevet és keresztnevet egy cellába mentik el és sokszor külön külön is szükség lenne rájuk.
-Ilyenkor jön jól az alábbi programocska, amivel most a termékek nevét fogjuk szétbontani.
+A kï¿½vetkezï¿½ csoportba nï¿½hï¿½ny olyan fï¿½ggvï¿½nyt soroltunk, amik a karakterlï¿½nc hosszï¿½t valamint a kï¿½zï¿½k ' ' eltï¿½volï¿½tï¿½sï¿½t teszik lehetï¿½vï¿½.
+DATALENGTH (szï¿½veg) Egy karakterlï¿½nc karaktereinek szï¿½mï¿½t adja vissza kï¿½zï¿½kkel egyï¿½tt. LEN (szï¿½veg) Ugyanaz mint a DATALENGTH, de a karakterlï¿½nc vï¿½gï¿½n lï¿½vï¿½ kï¿½zï¿½ket nem szï¿½molja bele. 
+LTRIM (szï¿½veg) Levï¿½gja a karakterlï¿½nc elejï¿½rï¿½l a fï¿½lï¿½sleges kï¿½zï¿½ket. RTRIM(szï¿½veg) Levï¿½gja a fï¿½lï¿½sleges kï¿½zï¿½ket egy karakterlï¿½nc vï¿½gï¿½rï¿½l. TRIM (szï¿½veg) 2017 ï¿½ta hasznï¿½lhatï¿½. 
+A karakterlï¿½nc mindkï¿½t vï¿½gï¿½rï¿½l levï¿½gja a fï¿½lï¿½sleges kï¿½zï¿½ket.
+Vï¿½gï¿½l pedig a CHARINDEX(), amit bï¿½r gyakran hasznï¿½lunk a kï¿½zï¿½k kezelï¿½sï¿½hez egy karakterlï¿½ncban de ennï¿½l tï¿½bbet tud. 
+A CHARINDEX segï¿½tsï¿½gï¿½vel egy szï¿½vegrï¿½szre kereshetï¿½nk rï¿½ egy karakterlï¿½ncban ï¿½s visszaadja, hogy hï¿½nyadik karakternï¿½l talï¿½lta meg.
+A szï¿½molï¿½st 1-tï¿½l kezdi. Ha nem talï¿½lja meg a keresett szï¿½vegrï¿½szt, akkor 0 ï¿½rtï¿½kkel tï¿½r vissza. 
+Nï¿½zzï¿½nk is egy gyakorlati pï¿½ldï¿½t a karakterfï¿½ggvï¿½nyek hasznï¿½latï¿½ra. 
+Gyakran elï¿½fordul, hogy a vezetï¿½knevet ï¿½s keresztnevet egy cellï¿½ba mentik el ï¿½s sokszor kï¿½lï¿½n kï¿½lï¿½n is szï¿½ksï¿½g lenne rï¿½juk.
+Ilyenkor jï¿½n jï¿½l az alï¿½bbi programocska, amivel most a termï¿½kek nevï¿½t fogjuk szï¿½tbontani.
 */
 
 SELECT P.name, 
-        CHARINDEX(' ', P.Name) as köz, --elsõ köz helye, ha több is van akkor az elsõ helyét adja vissza
-        LEFT(P.name, CHARINDEX(' ', P.Name)) as eleje, --visszaadja a karakterlánc elejét a közig
-        RIGHT(P.name, LEN(P.name)-CHARINDEX(' ', P.Name)) as vége -- visszaadja a karakterlánc végét a köztõl
+        CHARINDEX(' ', P.Name) as kï¿½z, --elsï¿½ kï¿½z helye, ha tï¿½bb is van akkor az elsï¿½ helyï¿½t adja vissza
+        LEFT(P.name, CHARINDEX(' ', P.Name)) as eleje, --visszaadja a karakterlï¿½nc elejï¿½t a kï¿½zig
+        RIGHT(P.name, LEN(P.name)-CHARINDEX(' ', P.Name)) as vï¿½ge -- visszaadja a karakterlï¿½nc vï¿½gï¿½t a kï¿½ztï¿½l
         FROM Production.Product P
 /*
-Mint látható a függvények paramétereinek helyére írhatunk kifejezéseket.
-Az utolsó szövegfüggvény amivel most foglalkozunk az a REPLACE(). Segítségével egy karaktert vagy karakter láncot cserélhetünk ki egy másikra egy szövegben.
-Erre meglepõen gyakran van szükség. Például a magyar ékezetes betûket német nyelvterületen szeretik karakterkombinációval helyettesíteni például é helyet ai-t írnak. 
-Vagy például szövegként mentenek el számokat és a tizedesvesszõt mint karaktert eltárolják. Ilyen esetekben jön jól a REPLACE.
-A következõ példában a közök helyére alávonást '_' írunk.
+Mint lï¿½thatï¿½ a fï¿½ggvï¿½nyek paramï¿½tereinek helyï¿½re ï¿½rhatunk kifejezï¿½seket.
+Az utolsï¿½ szï¿½vegfï¿½ggvï¿½ny amivel most foglalkozunk az a REPLACE(). Segï¿½tsï¿½gï¿½vel egy karaktert vagy karakter lï¿½ncot cserï¿½lhetï¿½nk ki egy mï¿½sikra egy szï¿½vegben.
+Erre meglepï¿½en gyakran van szï¿½ksï¿½g. Pï¿½ldï¿½ul a magyar ï¿½kezetes betï¿½ket nï¿½met nyelvterï¿½leten szeretik karakterkombinï¿½ciï¿½val helyettesï¿½teni pï¿½ldï¿½ul ï¿½ helyet ai-t ï¿½rnak. 
+Vagy pï¿½ldï¿½ul szï¿½vegkï¿½nt mentenek el szï¿½mokat ï¿½s a tizedesvesszï¿½t mint karaktert eltï¿½roljï¿½k. Ilyen esetekben jï¿½n jï¿½l a REPLACE.
+A kï¿½vetkezï¿½ pï¿½ldï¿½ban a kï¿½zï¿½k helyï¿½re alï¿½vonï¿½st '_' ï¿½runk.
 */
 
 SELECT P.name, REPLACE(P.name,' ','_')
     FROM Production.Product p
 /*
-Dátum függvények
+Dï¿½tum fï¿½ggvï¿½nyek
 
-A másik fügvénycsoport amivel foglalkozunk most azok a dátum formátumhoz kapcsolódó függvények. 
-A legegyszerûbb közülük amikor csak a dátum egy részére van szükségünk évre, hónapra, adott napra külön külön. 
-Erre való a YEAR(), MONTH() és DAY() függvények amik mögé csak zárójelbe meg kell adnunk az adatot. Egy egyszerû kis példa erre.
+A mï¿½sik fï¿½gvï¿½nycsoport amivel foglalkozunk most azok a dï¿½tum formï¿½tumhoz kapcsolï¿½dï¿½ fï¿½ggvï¿½nyek. 
+A legegyszerï¿½bb kï¿½zï¿½lï¿½k amikor csak a dï¿½tum egy rï¿½szï¿½re van szï¿½ksï¿½gï¿½nk ï¿½vre, hï¿½napra, adott napra kï¿½lï¿½n kï¿½lï¿½n. 
+Erre valï¿½ a YEAR(), MONTH() ï¿½s DAY() fï¿½ggvï¿½nyek amik mï¿½gï¿½ csak zï¿½rï¿½jelbe meg kell adnunk az adatot. Egy egyszerï¿½ kis pï¿½lda erre.
 */
 
-SELECT P.name, P.SellStartDate, YEAR(P.SellStartDate) év, MONTH(P.SellStartDate) hónap, DAY(P.SellStartDate) nap
+SELECT P.name, P.SellStartDate, YEAR(P.SellStartDate) ï¿½v, MONTH(P.SellStartDate) hï¿½nap, DAY(P.SellStartDate) nap
     FROM Production.Product P
 /*
-Ezek a függvények számként adják vissza a kért adatot.
-A DATEPART() függvény további adatokat tud adni nekünk egy adott dátumról, annak függvényében, hogy milyen paraméterrel használjuk. 
-Néhány paraméter: 
-- YYYY az évszámot adja vissza mint a YEAR függvény 
-- Y hányadik napja az adott évnek 
-- q visszaadja a negyedévet ahova a dátum esik 
-- ww hányadik hétre esik a dátum 
-- w visszaadja, hogy az adott hét hányadik napjára esik a dátum.
-Nézzünk erre egy rövid kis példát. 
-Ami a fent felsorolt paraméterek szerint visszaadja a termékek eladásának kezdetére vonatkozó infókat. 
-Ahhoz hogy a DATEPART függvények biztos helyesen mûködjön érdemes beállítani a hét kezdõnapját különben a nyelvi beállítások függvényében elõfordulhat hogy helytelen adatot kapunk,
-amikor lekérdezzük hányadik napjára esik a hétnek az adott dátum ehhez a SET DATEFIRST 1 parancsot kell kiadnunk.
+Ezek a fï¿½ggvï¿½nyek szï¿½mkï¿½nt adjï¿½k vissza a kï¿½rt adatot.
+A DATEPART() fï¿½ggvï¿½ny tovï¿½bbi adatokat tud adni nekï¿½nk egy adott dï¿½tumrï¿½l, annak fï¿½ggvï¿½nyï¿½ben, hogy milyen paramï¿½terrel hasznï¿½ljuk. 
+Nï¿½hï¿½ny paramï¿½ter: 
+- YYYY az ï¿½vszï¿½mot adja vissza mint a YEAR fï¿½ggvï¿½ny 
+- Y hï¿½nyadik napja az adott ï¿½vnek 
+- q visszaadja a negyedï¿½vet ahova a dï¿½tum esik 
+- ww hï¿½nyadik hï¿½tre esik a dï¿½tum 
+- w visszaadja, hogy az adott hï¿½t hï¿½nyadik napjï¿½ra esik a dï¿½tum.
+Nï¿½zzï¿½nk erre egy rï¿½vid kis pï¿½ldï¿½t. 
+Ami a fent felsorolt paramï¿½terek szerint visszaadja a termï¿½kek eladï¿½sï¿½nak kezdetï¿½re vonatkozï¿½ infï¿½kat. 
+Ahhoz hogy a DATEPART fï¿½ggvï¿½nyek biztos helyesen mï¿½kï¿½djï¿½n ï¿½rdemes beï¿½llï¿½tani a hï¿½t kezdï¿½napjï¿½t kï¿½lï¿½nben a nyelvi beï¿½llï¿½tï¿½sok fï¿½ggvï¿½nyï¿½ben elï¿½fordulhat hogy helytelen adatot kapunk,
+amikor lekï¿½rdezzï¿½k hï¿½nyadik napjï¿½ra esik a hï¿½tnek az adott dï¿½tum ehhez a SET DATEFIRST 1 parancsot kell kiadnunk.
 */
 
 SET DATEFIRST 1 
 SELECT P.name, 
         P.SellStartDate,
-        DATEPART(yyyy,P.SellStartDate) év,
-        DATEPART(y,P.SellStartDate) 'nap az évben',
-        DATEPART(q,P.SellStartDate) negyedév,
-        DATEPART(ww,P.SellStartDate) 'hányadik hét',
-        DATEPART(w,P.SellStartDate) 'nap a héten'
+        DATEPART(yyyy,P.SellStartDate) ï¿½v,
+        DATEPART(y,P.SellStartDate) 'nap az ï¿½vben',
+        DATEPART(q,P.SellStartDate) negyedï¿½v,
+        DATEPART(ww,P.SellStartDate) 'hï¿½nyadik hï¿½t',
+        DATEPART(w,P.SellStartDate) 'nap a hï¿½ten'
         FROM Production.Product P
 
 /*
-Lehetõségünk van arra is, hogy az adott hónap nevét és az adott nap nevét tudjuk meg. Erre használható a DATENAME() függvény.
-A w paraméterrel a napot m paraméterrel a hónap nevét kapjuk meg,
-A SET LANGUAGE parancsal pedig a nyelvet módosíthatjuk annak megfelelõen hogy milyen nyelven szeretnénk visszakapni az eredményet. Itt egy kis példa a használatára.
+Lehetï¿½sï¿½gï¿½nk van arra is, hogy az adott hï¿½nap nevï¿½t ï¿½s az adott nap nevï¿½t tudjuk meg. Erre hasznï¿½lhatï¿½ a DATENAME() fï¿½ggvï¿½ny.
+A w paramï¿½terrel a napot m paramï¿½terrel a hï¿½nap nevï¿½t kapjuk meg,
+A SET LANGUAGE parancsal pedig a nyelvet mï¿½dosï¿½thatjuk annak megfelelï¿½en hogy milyen nyelven szeretnï¿½nk visszakapni az eredmï¿½nyet. Itt egy kis pï¿½lda a hasznï¿½latï¿½ra.
 */
 
 SET LANGUAGE MAGYAR
@@ -129,45 +129,45 @@ SELECT P.name, P.SellStartDate,DATENAME(w, P.SellStartDate), DATENAME(m, P.SellS
     FROM Production.Product P
 
 /*
-Az aktuális dátumot és idõt is lekérhetjük SQL segítségével. Több függvény is képes erre és a részletekre oda kell figyelni a használatukkor.
-A GETDATE és a SYSDATETIME függvények az aktuális idõpontot kérik le az utóbbi pontosabb. 
-Arra viszont oda kell figyelni a használatukkor, hogy az SQL szerver szerinti idõzónát használják. 
-Ezt küszöböli ki a GETUTCDATE() függvény, ami mindig a greenwichi idõt adja vissza.
+Az aktuï¿½lis dï¿½tumot ï¿½s idï¿½t is lekï¿½rhetjï¿½k SQL segï¿½tsï¿½gï¿½vel. Tï¿½bb fï¿½ggvï¿½ny is kï¿½pes erre ï¿½s a rï¿½szletekre oda kell figyelni a hasznï¿½latukkor.
+A GETDATE ï¿½s a SYSDATETIME fï¿½ggvï¿½nyek az aktuï¿½lis idï¿½pontot kï¿½rik le az utï¿½bbi pontosabb. 
+Arra viszont oda kell figyelni a hasznï¿½latukkor, hogy az SQL szerver szerinti idï¿½zï¿½nï¿½t hasznï¿½ljï¿½k. 
+Ezt kï¿½szï¿½bï¿½li ki a GETUTCDATE() fï¿½ggvï¿½ny, ami mindig a greenwichi idï¿½t adja vissza.
 
-NULL kezelés
+NULL kezelï¿½s
 
-Az SQL nyelvben a NULL nem egyenlõ a matematikai nullával vagy semmivel. A NULL azt jelenti, hogy az adott értéket nem ismerjük.
-Éppen ezért sokszor kell kezelnünk ezt az esetet, mert a NULL-al való összehasonlítás eredménye mindig FALSE illetve a NULL-al végzet bármilyen mûvelet például az összeadás értéke mindig NULL lesz. 
-Ezt az esetet tudja kezelni például a COALESCE() függvény, aminek a szintaktikája COALESCE (mezõnév, helyettesítõ érték). A COALESCE használatakor ha az adott mezõben egy rekord értéke NULL akkor a helyettesítõ értéket használja az SQL. 
-Az alábbi példában lekérjük a termékeink nevét és ahol nincs megadva szín oda beírjuk hogy színtelen.
+Az SQL nyelvben a NULL nem egyenlï¿½ a matematikai nullï¿½val vagy semmivel. A NULL azt jelenti, hogy az adott ï¿½rtï¿½ket nem ismerjï¿½k.
+ï¿½ppen ezï¿½rt sokszor kell kezelnï¿½nk ezt az esetet, mert a NULL-al valï¿½ ï¿½sszehasonlï¿½tï¿½s eredmï¿½nye mindig FALSE illetve a NULL-al vï¿½gzet bï¿½rmilyen mï¿½velet pï¿½ldï¿½ul az ï¿½sszeadï¿½s ï¿½rtï¿½ke mindig NULL lesz. 
+Ezt az esetet tudja kezelni pï¿½ldï¿½ul a COALESCE() fï¿½ggvï¿½ny, aminek a szintaktikï¿½ja COALESCE (mezï¿½nï¿½v, helyettesï¿½tï¿½ ï¿½rtï¿½k). A COALESCE hasznï¿½latakor ha az adott mezï¿½ben egy rekord ï¿½rtï¿½ke NULL akkor a helyettesï¿½tï¿½ ï¿½rtï¿½ket hasznï¿½lja az SQL. 
+Az alï¿½bbi pï¿½ldï¿½ban lekï¿½rjï¿½k a termï¿½keink nevï¿½t ï¿½s ahol nincs megadva szï¿½n oda beï¿½rjuk hogy szï¿½ntelen.
 */
 
-SELECT P.Name, P.Color, COALESCE(P.Color,'szintelen') as 'szín'
+SELECT P.Name, P.Color, COALESCE(P.Color,'szintelen') as 'szï¿½n'
 FROM Production.product P
 /*
-Fontos még tudni, hogy COALESCE függvénynél akár a mezõnév helyére akár a helyettesítõ érték helyére írhatunk kifejezéseket is. 
-Az elõbbi példát kicsit továbbvive. A következõ rövid kis lekérdezésben összefûzzük egy mezõbe a termék nevét és színét és kezeljük azokat az eseteket ha akár a név akár a szín mezõben NULL van.
+Fontos mï¿½g tudni, hogy COALESCE fï¿½ggvï¿½nynï¿½l akï¿½r a mezï¿½nï¿½v helyï¿½re akï¿½r a helyettesï¿½tï¿½ ï¿½rtï¿½k helyï¿½re ï¿½rhatunk kifejezï¿½seket is. 
+Az elï¿½bbi pï¿½ldï¿½t kicsit tovï¿½bbvive. A kï¿½vetkezï¿½ rï¿½vid kis lekï¿½rdezï¿½sben ï¿½sszefï¿½zzï¿½k egy mezï¿½be a termï¿½k nevï¿½t ï¿½s szï¿½nï¿½t ï¿½s kezeljï¿½k azokat az eseteket ha akï¿½r a nï¿½v akï¿½r a szï¿½n mezï¿½ben NULL van.
 */
 
-SELECT P.Name, P.Color, CONCAT (COALESCE(P.name, 'név?'), COALESCE(P.Color, 'szín?'))  as 'termék és szín'
+SELECT P.Name, P.Color, CONCAT (COALESCE(P.name, 'nï¿½v?'), COALESCE(P.Color, 'szï¿½n?'))  as 'termï¿½k ï¿½s szï¿½n'
 FROM Production.product P
 /*
-Számok és dátumok esetén az IFNULL() függvényt is használhatjuk és akár csak a COALESCE-nél meg kell adnunk egy helyettesítõ értéket. 
-Az alábbi kis példában ha nincs megadva a termék súlya akkor automatikusan beírja hogy 2 legyen.
+Szï¿½mok ï¿½s dï¿½tumok esetï¿½n az IFNULL() fï¿½ggvï¿½nyt is hasznï¿½lhatjuk ï¿½s akï¿½r csak a COALESCE-nï¿½l meg kell adnunk egy helyettesï¿½tï¿½ ï¿½rtï¿½ket. 
+Az alï¿½bbi kis pï¿½ldï¿½ban ha nincs megadva a termï¿½k sï¿½lya akkor automatikusan beï¿½rja hogy 2 legyen.
 */
 
 SELECT P.Name, P.Weight, ifnull(P.weight, '2')
 FROM Production.product P
 /*
-Vannak olyan esetek, amikor arra vagyunk kíváncsiak, hogy egy adott mezõ értéke NULL vagy nem NULL erre szolgál az IS NULL kifejezés.
-Az alábbi kis példában kigyûjtjük azokat a termékeket, amiknek nincs megadva a színe.
+Vannak olyan esetek, amikor arra vagyunk kï¿½vï¿½ncsiak, hogy egy adott mezï¿½ ï¿½rtï¿½ke NULL vagy nem NULL erre szolgï¿½l az IS NULL kifejezï¿½s.
+Az alï¿½bbi kis pï¿½ldï¿½ban kigyï¿½jtjï¿½k azokat a termï¿½keket, amiknek nincs megadva a szï¿½ne.
 */
 
 SELECT P.Name, P.color
 FROM Production.product P
 WHERE P.Color IS NULL
 /*
-Ennek az ellentéte amikor arra vagyunk kíváncsiak, hogy mely termékeknek van megadva a színe. Erre használhatjuk az IS NOT NULL kifejezést.
+Ennek az ellentï¿½te amikor arra vagyunk kï¿½vï¿½ncsiak, hogy mely termï¿½keknek van megadva a szï¿½ne. Erre hasznï¿½lhatjuk az IS NOT NULL kifejezï¿½st.
 */
 
 SELECT P.Name, P.color

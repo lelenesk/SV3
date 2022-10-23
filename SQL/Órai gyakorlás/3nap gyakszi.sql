@@ -1,33 +1,33 @@
-/* Bemelegítõ */
+/* Bemelegï¿½tï¿½ */
 SELECT 
-P.Name AS 'Termék neve',
+P.Name AS 'Termï¿½k neve',
 P.Color color,
 P.ListPrice as listprice,
 P.Weight as 'weight',
-P.ListPrice+P.Weight 'Ár és súly'
+P.ListPrice+P.Weight 'ï¿½r ï¿½s sï¿½ly'
 FROM Production.product as P
 WHERE P.ListPrice+P.Weight IS NOT NULL
-Order BY 'Ár és súly'
+Order BY 'ï¿½r ï¿½s sï¿½ly'
 
-/*Kérdezd le az összes termék alkategória nevet a productsubcategory táblából.*/
+/*Kï¿½rdezd le az ï¿½sszes termï¿½k alkategï¿½ria nevet a productsubcategory tï¿½blï¿½bï¿½l.*/
 SELECT PSC.Name as Subname
 FROM Production.ProductSubcategory as PSC
 WHERE PSC.Name IS NOT NULL
 Order BY 'Subname'
 
-/*Kérdezd le az összes termékkategória nevet a productcategory táblából.*/
+/*Kï¿½rdezd le az ï¿½sszes termï¿½kkategï¿½ria nevet a productcategory tï¿½blï¿½bï¿½l.*/
 SELECT PC.Name as 'Name'
 FROM Production.ProductCategory as PC
 WHERE PC.Name IS NOT NULL
 Order BY 'Name'
 
-/*Kérdezd le az összes kapcsolattartó nevét és e-mail címét a Person táblából.*/
+/*Kï¿½rdezd le az ï¿½sszes kapcsolattartï¿½ nevï¿½t ï¿½s e-mail cï¿½mï¿½t a Person tï¿½blï¿½bï¿½l.*/
 SELECT 
-P.FirstName + ' ' + COALESCE(P.Title,'LMBTQ') + ' ' + P.LastName as 'Teljes név'
+P.FirstName + ' ' + COALESCE(P.Title,'LMBTQ') + ' ' + P.LastName as 'Teljes nï¿½v'
 FROM Person.Person as P
 ORDER BY P.LastName
 
-/*gyakorlás*/
+/*gyakorlï¿½s*/
 Select P.Name, P.Color, P.Size
 From Production.Product P
 -- Where P.Color='Blue' OR P.Color='Red'
@@ -39,43 +39,43 @@ From Production.Product P
 
 
 SELECT P.ProductID, P.Name,
-    CASE P.Color WHEN 'Blue' THEN 'Kék'
+    CASE P.Color WHEN 'Blue' THEN 'Kï¿½k'
                  WHEN 'Red' THEN 'Piros'
-                 WHEN 'Silver' THEN 'Ezüst'
+                 WHEN 'Silver' THEN 'Ezï¿½st'
                  WHEN 'Black' THEN 'Fekete'
                  ELSE 'N/A'
-                 END as Szín
+                 END as Szï¿½n
 FROM Production.product P
 
 
 
 SELECT 
-COALESCE(P.Title,'') +' '+ P.LastName +' '+ COALESCE(P.MiddleName,'') + ' ' + P.FirstName  as 'Teljes név'
+COALESCE(P.Title,'') +' '+ P.LastName +' '+ COALESCE(P.MiddleName,'') + ' ' + P.FirstName  as 'Teljes nï¿½v'
 FROM Person.Person as P
 ORDER BY P.LastName
 
-/*Kérdezd le azokat a rendelésazonosítókat amiket 2012.03.01 és 2012.03.20. között rendeltek SalesOrderHeader táblából.*/
+/*Kï¿½rdezd le azoka a rendelï¿½sazonosï¿½tï¿½kat amiket 2012.03.01 ï¿½s 2012.03.20. kï¿½zï¿½tt rendeltek SalesOrderHeader tï¿½blï¿½bï¿½l.*/
 Select *
 From Production.Product P
 
 Select S.SalesOrderNumber, S.OrderDate
 From Sales.SalesOrderHeader S
-WHERE S.OrderDate between '2012-03-01' and '2012-03-20' --ez így csak 19-éig listáz, a 0 óra nulla perc miatt
+WHERE S.OrderDate between '2012-03-01' and '2012-03-20' --ez ï¿½gy csak 19-ï¿½ig listï¿½z, a 0 ï¿½ra nulla perc miatt
 Order by S.OrderDate 
 
 
 
-/*Kérdezd le a termékek nevét, ha a sellenddate meg van adva írasd ki hogy már nem áruljuk ha nincs megadva akkor azt hogy még áruljuk az áruljuk? nevû mezõbe.*/
+/*Kï¿½rdezd le a termï¿½kek nevï¿½t, ha a sellenddate meg van adva ï¿½rasd ki hogy mï¿½r nem ï¿½ruljuk ha nincs megadva akkor azt hogy mï¿½g ï¿½ruljuk az ï¿½ruljuk? nevï¿½ mezï¿½be.*/
 
-Select P.Name, IIF(P.SellEndDate <>0,'Már nem áruljuk', 'Még áruljuk')
+Select P.Name, IIF(P.SellEndDate <>0,'Mï¿½r nem ï¿½ruljuk', 'Mï¿½g ï¿½ruljuk')
 From Production.Product P
 Order by P.Name
 
 
 SELECT P.Name, P.SellEndDate,
-CASE ISDATE(P.SellEndDate) WHEN 0 THEN 'Még áruljuk'
-						   WHEN 1 THEN 'Már nem áruljuk'
-						   END as 'Áruljuk-e'
+CASE ISDATE(P.SellEndDate) WHEN 0 THEN 'Mï¿½g ï¿½ruljuk'
+						   WHEN 1 THEN 'Mï¿½r nem ï¿½ruljuk'
+						   END as 'ï¿½ruljuk-e'
 From Production.Product P
 Order by P.Name
 

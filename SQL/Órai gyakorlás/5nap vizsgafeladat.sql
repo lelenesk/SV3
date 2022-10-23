@@ -1,6 +1,6 @@
 
 /*Listázd ki azt a 10 váráslót (customerID) a Sales.SalesorderHeader táblából, akik 2013 harmadik negyedévében a legnagyobb összértékben (totaldue) rendeltek 
-és rendeléseik összértéke ebben az időszakban meghaladta a 160000-et. Ne vedd figyelembe azokat a rendeléseket, amiknek az értéke 100-nál kisebb volt.*/
+és rendeléseik összértéke ebben az időszakban meghaladta a 160000-et. Ne ved figyelembe azokat a rendeléseket, amiknek az értéke 100-nál kisebb volt.*/
 
 
 SELECT TOP 10 S.CustomerID AS 'Megrendelő "neve"', SUM(CAST(S.TotalDue AS decimal)) AS 'Rendelések összértéke',

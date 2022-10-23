@@ -1,75 +1,75 @@
 /*
 DQL 1.
 
-Predikátumok, állítások.
-Ezek segítségével is kialakíthatunk feltételeket , tehetünk állításokat vagy szûrhetünk. 
-Ilyen például az IN a vizsgált adat a felsoroltak között van. Összehasonlító operátorok =, >, < stb. ezeket kombinálhatjuk a felkiáltójellel ami azt jelenti,
-hogy nem igaz például != azt jelenti, hogy nem egyenlõ. Logikai operátorok AND, OR, NOT stb. ezekkel például feltételeket kapcsolhatunk össze logikailag stb. 
-Aritmetikai operátorok szorzás*, osztás / stb. A % szorul magyarázatra. Ez T-SQL-ben az egész osztás maradékát jelenti tehát a 11%2=0,5. 
-Karakteres összekapcsolásra a + jelet használjuk.
+Predikï¿½tumok, ï¿½llï¿½tï¿½sok.
+Ezek segï¿½tsï¿½gï¿½vel is kialakï¿½thatunk feltï¿½teleket , tehetï¿½nk ï¿½llï¿½tï¿½sokat vagy szï¿½rhetï¿½nk. 
+Ilyen pï¿½ldï¿½ul az IN a vizsgï¿½lt adat a felsoroltak kï¿½zï¿½tt van. ï¿½sszehasonlï¿½tï¿½ operï¿½torok =, >, < stb. ezeket kombinï¿½lhatjuk a felkiï¿½ltï¿½jellel ami azt jelenti,
+hogy nem igaz pï¿½ldï¿½ul != azt jelenti, hogy nem egyenlï¿½. Logikai operï¿½torok AND, OR, NOT stb. ezekkel pï¿½ldï¿½ul feltï¿½teleket kapcsolhatunk ï¿½ssze logikailag stb. 
+Aritmetikai operï¿½torok szorzï¿½s*, osztï¿½s / stb. A % szorul magyarï¿½zatra. Ez T-SQL-ben az egï¿½sz osztï¿½s maradï¿½kï¿½t jelenti tehï¿½t a 11%2=0,5. 
+Karakteres ï¿½sszekapcsolï¿½sra a + jelet hasznï¿½ljuk.
 
-Változók
+Vï¿½ltozï¿½k
 
-A T-SQL mint más programnyelvek is használ változókat. 
-A változó olyan ideiglenesen használt adattároló, ami hivatkozható, jellemzõen nevet kap életciklusa és érvényességi köre van ezeken belül a változó neve egyedi kell hogy legyen hiszen egyértelmûen tudnunk kell hivatkozni rájuk. 
-Azt hogy változóról van szó a @ jellel jelöljük a T-SQL-ben. A változókat mindig kötelezõ deklarálni és meg kell adni az adott változó adattípusát is.
-A deklarációkor nem kötelezõ az értékadás, de akkor tudatosan figyelni kell rá. 
-A T-SQL-ben a változók hatóköre egy batch (batch) ez egy fordítás/futtatási egységet jelent.
+A T-SQL mint mï¿½s programnyelvek is hasznï¿½l vï¿½ltozï¿½kat. 
+A vï¿½ltozï¿½ olyan ideiglenesen hasznï¿½lt adattï¿½rolï¿½, ami hivatkozhatï¿½, jellemzï¿½en nevet kap ï¿½letciklusa ï¿½s ï¿½rvï¿½nyessï¿½gi kï¿½re van ezeken belï¿½l a vï¿½ltozï¿½ neve egyedi kell hogy legyen hiszen egyï¿½rtelmï¿½en tudnunk kell hivatkozni rï¿½juk. 
+Azt, hogy vï¿½ltozï¿½rï¿½l van szï¿½ a @ jellel jelï¿½ljï¿½k a T-SQL-ben. A vï¿½ltozï¿½kat mindig kï¿½telezï¿½ deklarï¿½lni ï¿½s meg kell adni az adott vï¿½ltozï¿½ adattï¿½pusï¿½t is.
+A deklarï¿½ciï¿½kor nem kï¿½telezï¿½ az ï¿½rtï¿½kadï¿½s, de akkor tudatosan figyelni kell rï¿½. 
+A T-SQL-ben a vï¿½ltozï¿½k hatï¿½kï¿½re egy batch (batch) ez egy fordï¿½tï¿½s/futtatï¿½si egysï¿½get jelent.
 
-Kötegelt feldolgozás
+Kï¿½tegelt feldolgozï¿½s
 
-Az SQL szerver az általunk írt scripteket / scriptsorozatokat kötegekben dolgozza fel. 
-A feldolgozás során elõször szintaktikailag ellenõrzi majd értelmezi, lefordítja és végül végrehajtja. 
-Kötegek feldolgozása tekintetében az utasítások két csoportba sorohatóak. Bizonyos parancsok használhatóak egy kötegen belül másokat pl.: create table külön kötegbe kell rendezni. 
-A kötegek határát a GO szóval tudjuk jelölni a szervernek. A GO nem SQL utasítás csak egy szintaktikai jelölõ.
+Az SQL szerver az ï¿½ltalunk ï¿½rt scripteket / scriptsorozatokat kï¿½tegekben dolgozza fel. 
+A feldolgozï¿½s sorï¿½n elï¿½szï¿½r szintaktikailag ellenï¿½rzi majd ï¿½rtelmezi, lefordï¿½tja ï¿½s vï¿½gï¿½l vï¿½grehajtja. 
+Kï¿½tegek feldolgozï¿½sa tekintetï¿½ben az utasï¿½tï¿½sok kï¿½t csoportba sorohatï¿½ak. Bizonyos parancsok hasznï¿½lhatï¿½ak egy kï¿½tegen belï¿½l mï¿½sokat pl.: create table kï¿½lï¿½n kï¿½tegbe kell rendezni. 
+A kï¿½tegek hatï¿½rï¿½t a GO szï¿½val tudjuk jelï¿½lni a szervernek. A GO nem SQL utasï¿½tï¿½s csak egy szintaktikai jelï¿½lï¿½.
 
-Adattípusok
+Adattï¿½pusok
 
-A változók deklarálása kapcsán már felmerült az adattípusok kérdése.
-Mint sok más programnyelvben a T-SQL-ben is meg kell adni, hogy mikor milyen adattípusról van szó. 
-Nem csak a változók, de a táblák mezõinek megadásakor is. Az adattípus határozza meg, hogy a program hogy értelmezze az adott karaktereket.
-Például ha az “5” mint karakter egy változóban valamilyen számként van definiálva akkor matematikai mûveletekkel hozzáadható egy másik számhoz és az összegüket kapjuk vissza. 
-Ha viszont szövegként van ugyanez a változó deklarálva akkor egy másik szöveghez fûzhetjük hozzá mint bármilyen más szöveget. 
-Az értelmezésen túl az adattípus meghatározza azt is, hogy az adatbázis mekkora tárterületet foglal le egy-egy adat tárolásához illetve, hogy milyen értékeket vehet fel az adot karakter.
-A következõ táblázat egy rövid áttekintést nyújt az adat típusokról. Fontos, hogy sok további információ kapcsolódik a használatukhoz arról a táblázat alatti linken érdemes tájékozódni.
+A vï¿½ltozï¿½k deklarï¿½lï¿½sa kapcsï¿½n mï¿½r felmerï¿½lt az adattï¿½pusok kï¿½rdï¿½se.
+Mint sok mï¿½s programnyelvben a T-SQL-ben is meg kell adni, hogy mikor milyen adattï¿½pusrï¿½l van szï¿½. 
+Nem csak a vï¿½ltozï¿½k, de a tï¿½blï¿½k mezï¿½inek megadï¿½sakor is. Az adattï¿½pus hatï¿½rozza meg, hogy a program hogy ï¿½rtelmezze az adott karaktereket.
+Pï¿½ldï¿½ul ha az ï¿½5ï¿½ mint karakter egy vï¿½ltozï¿½ban valamilyen szï¿½mkï¿½nt van definiï¿½lva akkor matematikai mï¿½veletekkel hozzï¿½adhatï¿½ egy mï¿½sik szï¿½mhoz ï¿½s az ï¿½sszegï¿½ket kapjuk vissza. 
+Ha viszont szï¿½vegkï¿½nt van ugyanez a vï¿½ltozï¿½ deklarï¿½lva akkor egy mï¿½sik szï¿½veghez fï¿½zhetjï¿½k hozzï¿½ mint bï¿½rmilyen mï¿½s szï¿½veget. 
+Az ï¿½rtelmezï¿½sen tï¿½l az adattï¿½pus meghatï¿½rozza azt is, hogy az adatbï¿½zis mekkora tï¿½rterï¿½letet foglal le egy-egy adat tï¿½rolï¿½sï¿½hoz illetve, hogy milyen ï¿½rtï¿½keket vehet fel az adot karakter.
+A kï¿½vetkezï¿½ tï¿½blï¿½zat egy rï¿½vid ï¿½ttekintï¿½st nyï¿½jt az adat tï¿½pusokrï¿½l. Fontos, hogy sok tovï¿½bbi informï¿½ciï¿½ kapcsolï¿½dik a hasznï¿½latukhoz arrï¿½l a tï¿½blï¿½zat alatti linken ï¿½rdemes tï¿½jï¿½kozï¿½dni.
 
-MSSQL Adattípusok
+MSSQL Adattï¿½pusok
 
-Kifejezések
-A kifejezések mezõket, változókat, függvényeket és operátorokat tartalmazhatnak. 
-A végrehajtási sorrendet zárojelekkel befolyásolhatjuk ha az alapértelmezett számunkra nem megfelelõ. 
-A kifejezések mindenhol használhatóak, ahol a szintaktika megengedi.
+Kifejezï¿½sek
+A kifejezï¿½sek mezï¿½ket, vï¿½ltozï¿½kat, fï¿½ggvï¿½nyeket ï¿½s operï¿½torokat tartalmazhatnak. 
+A vï¿½grehajtï¿½si sorrendet zï¿½rojelekkel befolyï¿½solhatjuk ha az alapï¿½rtelmezett szï¿½munkra nem megfelelï¿½. 
+A kifejezï¿½sek mindenhol hasznï¿½lhatï¿½ak, ahol a szintaktika megengedi.
 
-Kommentelés
-A kommentelés segít nekünk és a kollégáinknak, hogy az általunk írtakat értelmezni tudjuk.
-Ezek a megjegyzések nem kerülnek értelmezésre futáskor épp ezért akár arra is használhatjuk, hogy a kódunk egy részét ne futtassuk le ha éppen nem szeretnénk.
-A kommenteket kétféleképpen jelölhetjük.
+Kommentelï¿½s
+A kommentelï¿½s segï¿½t nekï¿½nk ï¿½s a kollï¿½gï¿½inknak, hogy az ï¿½ltalunk ï¿½rtakat ï¿½rtelmezni tudjuk.
+Ezek a megjegyzï¿½sek nem kerï¿½lnek ï¿½rtelmezï¿½sre futï¿½skor ï¿½pp ezï¿½rt akï¿½r arra is hasznï¿½lhatjuk, hogy a kï¿½dunk egy rï¿½szï¿½t ne futtassuk le ha ï¿½ppen nem szeretnï¿½nk.
+A kommenteket kï¿½tfï¿½lekï¿½ppen jelï¿½lhetjï¿½k.
 
--- a sor végéig kommenté válik amit mögé írunk. (inline komment)  
+-- a sor vï¿½gï¿½ig kommentï¿½ vï¿½lik amit mï¿½gï¿½ ï¿½runk. (inline komment)  
 
 https://github.com/PM-Uzemeltetok/sv3SQL
 
-A kommenteket az MSSM zöld színnel jelzi.
+A kommenteket az MSSM zï¿½ld szï¿½nnel jelzi.
 
-Lekérdezések
+Lekï¿½rdezï¿½sek
 
-A lekérdezések segítségével tudunk egy adatbázisból adatokat kinyerni és azokat utána új struktúrában tudjuk õket felhasználni.
-A lekérdezés nem más mint egy rövid program, ami utasítja az adatbázis szervert, hogy milyen adatokat milyen formában gyûjtsön össze.
-Automatikusan sem a lekérdezés kódja sem a lekérdezés eredménye nem kerül mentésre, de lehetõségünk van mindkettõt elmenteni vagy továbbirányítani például változóba.
+A lekï¿½rdezï¿½sek segï¿½tsï¿½gï¿½vel tudunk egy adatbï¿½zisbï¿½l adatokat kinyerni ï¿½s azokat utï¿½na ï¿½j struktï¿½rï¿½ban tudjuk ï¿½ket felhasznï¿½lni.
+A lekï¿½rdezï¿½s nem mï¿½s mint egy rï¿½vid program, ami utasï¿½tja az adatbï¿½zis szervert, hogy milyen adatokat milyen formï¿½ban gyï¿½jtsï¿½n ï¿½ssze.
+Automatikusan sem a lekï¿½rdezï¿½s kï¿½dja sem a lekï¿½rdezï¿½s eredmï¿½nye nem kerï¿½l mentï¿½sre, de lehetï¿½sï¿½gï¿½nk van mindkettï¿½t elmenteni vagy tovï¿½bbirï¿½nyï¿½tani pï¿½ldï¿½ul vï¿½ltozï¿½ba.
 
-A SELECT utasítás végrehajtási sorrendje és szintaktikája sajnos nem egyezik meg viszont mindkettõt tudnunk kell.
+A SELECT utasï¿½tï¿½s vï¿½grehajtï¿½si sorrendje ï¿½s szintaktikï¿½ja sajnos nem egyezik meg viszont mindkettï¿½t tudnunk kell.
 
-A végrehajtási sorrend határozza meg, hogy a szerver az utasításainkat milyen sorrendben hajtja végre. Ez nagyban befolyásolja a végeredményt is.Az alábbi végrehajtási sorrend nem minden eleme kötelezõ csak a SELECT és a FROM. A végrehajtási sorrend:
-* FROM (melyik adatbázis melyik táblázatából, táblázataiból szeretnénk az adatokat)
-* (JOIN) (amennyiben több táblából szeretnénk dolgozni) * WHERE (itt határozhatjuk meg a feltételeket ami alapján leszûrjük az eredményt)
-* GROUP BY (itt a feltételeinknek megfelelõ rekordokat csoportosíthatjuk)
-* HAVING (ugyanúgy mint a WHERE parancsnál feltételeket adhatunk meg ami alapján szûrjük az eredményt, de ezúttal már nem az egyes rekordokra szûrünk, hanem a GROUP BY által képzett csoportok közül választhatjuk ki a nekünk szükségeseket)
-* SELECT (itt választhatjuk azokat a mezõket, amiket szeretnénk megjeleníteni, fontos itt a mezõket (oszlopokat) adjuk meg amiket látni szeretnénk
-* DISTINCT (ezzel a paraméterrel tudjuk csak az egyedi értékekeket értékkombinációkat megjeleníteni)
-* ORDER BY (a legkérdezésünk eddigi eredményét valamilyen sorrendbe rendezhetjük akár több szempont alapján is)
-* TOP (itt meghatározhatjuk hogy a lekérdezett és sorba rendezett rekordok közül hányat szeretnénk látni)
+A vï¿½grehajtï¿½si sorrend hatï¿½rozza meg, hogy a szerver az utasï¿½tï¿½sainkat milyen sorrendben hajtja vï¿½gre. Ez nagyban befolyï¿½solja a vï¿½geredmï¿½nyt is.Az alï¿½bbi vï¿½grehajtï¿½si sorrend nem minden eleme kï¿½telezï¿½ csak a SELECT ï¿½s a FROM. A vï¿½grehajtï¿½si sorrend:
+* FROM (melyik adatbï¿½zis melyik tï¿½blï¿½zatï¿½bï¿½l, tï¿½blï¿½zataibï¿½l szeretnï¿½nk az adatokat)
+* (JOIN) (amennyiben tï¿½bb tï¿½blï¿½bï¿½l szeretnï¿½nk dolgozni) * WHERE (itt hatï¿½rozhatjuk meg a feltï¿½teleket ami alapjï¿½n leszï¿½rjï¿½k az eredmï¿½nyt)
+* GROUP BY (itt a feltï¿½teleinknek megfelelï¿½ rekordokat csoportosï¿½thatjuk)
+* HAVING (ugyanï¿½gy mint a WHERE parancsnï¿½l feltï¿½teleket adhatunk meg ami alapjï¿½n szï¿½rjï¿½k az eredmï¿½nyt, de ezï¿½ttal mï¿½r nem az egyes rekordokra szï¿½rï¿½nk, hanem a GROUP BY ï¿½ltal kï¿½pzett csoportok kï¿½zï¿½l vï¿½laszthatjuk ki a nekï¿½nk szï¿½ksï¿½geseket)
+* SELECT (itt vï¿½laszthatjuk azokat a mezï¿½ket, amiket szeretnï¿½nk megjelenï¿½teni, fontos itt a mezï¿½ket (oszlopokat) adjuk meg amiket lï¿½tni szeretnï¿½nk
+* DISTINCT (ezzel a paramï¿½terrel tudjuk csak az egyedi ï¿½rtï¿½kekeket ï¿½rtï¿½kkombinï¿½ciï¿½kat megjelenï¿½teni)
+* ORDER BY (a legkï¿½rdezï¿½sï¿½nk eddigi eredmï¿½nyï¿½t valamilyen sorrendbe rendezhetjï¿½k akï¿½r tï¿½bb szempont alapjï¿½n is)
+* TOP (itt meghatï¿½rozhatjuk hogy a lekï¿½rdezett ï¿½s sorba rendezett rekordok kï¿½zï¿½l hï¿½nyat szeretnï¿½nk lï¿½tni)
 
-A szintaktikai sorrend pedig az alábbi:
+A szintaktikai sorrend pedig az alï¿½bbi:
 * SELECT DISTINCT TOP * FROM
 * (JOIN) * WHERE
 * GROUP BY
@@ -77,54 +77,54 @@ A szintaktikai sorrend pedig az alábbi:
 * ORDER BY
 * LIMIT
 
-Nézzük a parancsokat és pár lehetõségüket
+Nï¿½zzï¿½k a parancsokat ï¿½s pï¿½r lehetï¿½sï¿½gï¿½ket
 
-Egytáblás SELECT:
-Mezõk kiválasztása és módosítása
+Egytï¿½blï¿½s SELECT:
+Mezï¿½k kivï¿½lasztï¿½sa ï¿½s mï¿½dosï¿½tï¿½sa
 
-A SELECT után egyértelmûen meg kell határoznunk a megjeleníteni kívánt mezõket. 
-Ha csak egyetlen táblát használunk a lekérdezésünkben (FROM után csak egy tábla van) akkor a mezõnév megadásakor az õt tartalmazó táblázat neve elhagyható. 
-Mivel azonban az egytáblás lekérdezések viszonylag ritkák így már a kezdeteknél érdemes rászokni, hogy a mezõnév elõtt megadjuk a tábla nevét is a táblanév.mezõnév formában. 
-Hiszen a mezõneveknek csak táblán belül kell egyedinek lennie. Másik tábla már tartalmazhat azonos mezõnevet. 
-Fontos megjegyezni, hogy a T-SQL case sensitive lehet a táblaneveket illetõen ez a szerver beállításaitól függ.
-Fontos, hogy az egyes lekérdezések végére írjunk pontosvesszõt (;) ellenkezõ esetben a SSMS hibát fog jelezni ha mögé írjuk a következõ lekérdezést vagy más utasítást.
-A kényelmünk érdekében lehetõség van arra, hogy egy-egy lekérdezésen belül aliasokkal hivatkozzunk adattáblákra, hogy ne kelljen mindig kiírni a teljes nevüket ezt a FROM után kell megadni. 
-Fontos hogy ezeket az aliasokat akkor ismeri föl a szerver ha a FROM-ba már beleírtuk. 
-Ezért gyakori hogy elõször a select utána csak egy csillagot írunk utána megírjuk a FROM részt majd visszatérünk a SELECT-hez amikor már felismeri a program az aliasaink és ki tudja egészíteni.
+A SELECT utï¿½n egyï¿½rtelmï¿½en meg kell hatï¿½roznunk a megjelenï¿½teni kï¿½vï¿½nt mezï¿½ket. 
+Ha csak egyetlen tï¿½blï¿½t hasznï¿½lunk a lekï¿½rdezï¿½sï¿½nkben (FROM utï¿½n csak egy tï¿½bla van) akkor a mezï¿½nï¿½v megadï¿½sakor az ï¿½t tartalmazï¿½ tï¿½blï¿½zat neve elhagyhatï¿½. 
+Mivel azonban az egytï¿½blï¿½s lekï¿½rdezï¿½sek viszonylag ritkï¿½k ï¿½gy mï¿½r a kezdeteknï¿½l ï¿½rdemes rï¿½szokni, hogy a mezï¿½nï¿½v elï¿½tt megadjuk a tï¿½bla nevï¿½t is a tï¿½blanï¿½v.mezï¿½nï¿½v formï¿½ban. 
+Hiszen a mezï¿½neveknek csak tï¿½blï¿½n belï¿½l kell egyedinek lennie. Mï¿½sik tï¿½bla mï¿½r tartalmazhat azonos mezï¿½nevet. 
+Fontos megjegyezni, hogy a T-SQL case sensitive lehet a tï¿½blaneveket illetï¿½en ez a szerver beï¿½llï¿½tï¿½saitï¿½l fï¿½gg.
+Fontos, hogy az egyes lekï¿½rdezï¿½sek vï¿½gï¿½re ï¿½rjunk pontosvesszï¿½t (;) ellenkezï¿½ esetben a SSMS hibï¿½t fog jelezni ha mï¿½gï¿½ ï¿½rjuk a kï¿½vetkezï¿½ lekï¿½rdezï¿½st vagy mï¿½s utasï¿½tï¿½st.
+A kï¿½nyelmï¿½nk ï¿½rdekï¿½ben lehetï¿½sï¿½g van arra, hogy egy-egy lekï¿½rdezï¿½sen belï¿½l aliasokkal hivatkozzunk adattï¿½blï¿½kra, hogy ne kelljen mindig kiï¿½rni a teljes nevï¿½ket ezt a FROM utï¿½n kell megadni. 
+Fontos hogy ezeket az aliasokat akkor ismeri fï¿½l a szerver ha a FROM-ba mï¿½r beleï¿½rtuk. 
+Ezï¿½rt gyakori hogy elï¿½szï¿½r a select utï¿½na csak egy csillagot ï¿½runk utï¿½na megï¿½rjuk a FROM rï¿½szt majd visszatï¿½rï¿½nk a SELECT-hez amikor mï¿½r felismeri a program az aliasaink ï¿½s ki tudja egï¿½szï¿½teni.
 */
 
 SELECT P.ProductID
 FROM Production.Product P 
 
 /*
-Használhatunk képleteket és kifejezéseket amiknek utána aliast adhatunk. 
-Fontos, hogy mivel a WHERE hamarabb hajtódik végre, ezért a SELECT-ben definiált aliasok nem hivatkozhatóak a WHERE részben.
-Az itt megadott alias lesz a lekérdezésünk eredményében az oszlop neve ha nem adunk meg akkor No column name fog megjelenni.
+Hasznï¿½lhatunk kï¿½pleteket ï¿½s kifejezï¿½seket amiknek utï¿½na aliast adhatunk. 
+Fontos, hogy mivel a WHERE hamarabb hajtï¿½dik vï¿½gre, ezï¿½rt a SELECT-ben definiï¿½lt aliasok nem hivatkozhatï¿½ak a WHERE rï¿½szben.
+Az itt megadott alias lesz a lekï¿½rdezï¿½sï¿½nk eredmï¿½nyï¿½ben az oszlop neve ha nem adunk meg akkor No column name fog megjelenni.
 */
-SELECT P.StandardCost, P.ListPrice, P.StandardCost + P.ListPrice as összeg
+SELECT P.StandardCost, P.ListPrice, P.StandardCost + P.ListPrice as ï¿½sszeg
 FROM Production.product as P
 
 /*
-Használhatunk képleteket és kifejezéseket amiknek utána aliast adhatunk. 
-Fontos, hogy mivel a WHERE hamarabb hajtódik végre, ezért a SELECT-ben definiált aliasok nem hivatkozhatóak a WHERE részben.
-Az itt megadott alias lesz a lekérdezésünk eredményében az oszlop neve ha nem adunk meg akkor No column name fog megjelenni.
-Több programnak problémája lehet azzal ha egy mezõnek nincs neve ezért kerülendõ
+Hasznï¿½lhatunk kï¿½pleteket ï¿½s kifejezï¿½seket amiknek utï¿½na aliast adhatunk. 
+Fontos, hogy mivel a WHERE hamarabb hajtï¿½dik vï¿½gre, ezï¿½rt a SELECT-ben definiï¿½lt aliasok nem hivatkozhatï¿½ak a WHERE rï¿½szben.
+Az itt megadott alias lesz a lekï¿½rdezï¿½sï¿½nk eredmï¿½nyï¿½ben az oszlop neve ha nem adunk meg akkor No column name fog megjelenni.
+Tï¿½bb programnak problï¿½mï¿½ja lehet azzal ha egy mezï¿½nek nincs neve ezï¿½rt kerï¿½lendï¿½
 */
- SELECT P.name+ P.Productnumber as hosszunév
+ SELECT P.name+ P.Productnumber as hosszunï¿½v
         FROM Production.Product P 
 
 /*
-A fenti példában a névhez hozzáfûzzük a productnumber-t folytatólagosan.
-Ha szeretnénk valamilyen fix karakterláncot hozzáfûzni egy mezõ értékéhez akkor azt aposztrófok (‘) közé kell tenni.
-Így már lesz egy space a productnumber és a ProductNumber között.
+A fenti pï¿½ldï¿½ban a nï¿½vhez hozzï¿½fï¿½zzï¿½k a productnumber-t folytatï¿½lagosan.
+Ha szeretnï¿½nk valamilyen fix karakterlï¿½ncot hozzï¿½fï¿½zni egy mezï¿½ ï¿½rtï¿½kï¿½hez akkor azt aposztrï¿½fok (ï¿½) kï¿½zï¿½ kell tenni.
+ï¿½gy mï¿½r lesz egy space a productnumber ï¿½s a ProductNumber kï¿½zï¿½tt.
 */
-SELECT P.name + ' ' + P.Productnumber as hosszunév
+SELECT P.name + ' ' + P.Productnumber as hosszunï¿½v
         FROM Production.Product P 
 
 /*
 **********************WHERE***********************************
-Természetesen amikor lekérdezést csinálunk akkor nem mindig akarjuk látni az összes rekordot, hanem valamilyen szempont szerint szeretnénk szûrni ezeket. 
-Erre szolgál a WHERE kulcsszó. A legegyszerûbb eset, amikor egyetlen szempont szerint szeretnénk szûrni. Mint az alábbi példa mutatja.
+Termï¿½szetesen amikor lekï¿½rdezï¿½st csinï¿½lunk akkor nem mindig akarjuk lï¿½tni az ï¿½sszes rekordot, hanem valamilyen szempont szerint szeretnï¿½nk szï¿½rni ezeket. 
+Erre szolgï¿½l a WHERE kulcsszï¿½. A legegyszerï¿½bb eset, amikor egyetlen szempont szerint szeretnï¿½nk szï¿½rni. Mint az alï¿½bbi pï¿½lda mutatja.
 */
 SELECT P.ProductID, P.Name, P.Color
 FROM Production.product P
@@ -132,95 +132,95 @@ WHERE P.Color ='Red'
 
 
 /*
-Ebben az esetben a lekérdezésünk a piros színû termékeket fogja kiszûrni. 
-Fontos, hogy szûréskor a feltétel értékét (jelen esetben a Red szót) aposztrofok (') közé kell tenni. 
-Természetesen nem mindig csak egy értékre akarunk szûrni. Ha ugyanannak a mezõnek több lehetséges értékére is kíváncsiak vagyunk akkor azt kétféleképpen is leírhatjuk. 
-A különbözõ feltételeket az **OR** szó használatával összefûzhetjük vagy akár az **IN** szó használatával fel is sorohatjuk. 
-Tehát a WHERE feltétel után a következõ két kifejezés egyenértékû
+Ebben az esetben a lekï¿½rdezï¿½sï¿½nk a piros szï¿½nï¿½ termï¿½keket fogja kiszï¿½rni. 
+Fontos, hogy szï¿½rï¿½skor a feltï¿½tel ï¿½rtï¿½kï¿½t (jelen esetben a Red szï¿½t) aposztrofok (') kï¿½zï¿½ kell tenni. 
+Termï¿½szetesen nem mindig csak egy ï¿½rtï¿½kre akarunk szï¿½rni. Ha ugyanannak a mezï¿½nek tï¿½bb lehetsï¿½ges ï¿½rtï¿½kï¿½re is kï¿½vï¿½ncsiak vagyunk akkor azt kï¿½tfï¿½lekï¿½ppen is leï¿½rhatjuk. 
+A kï¿½lï¿½nbï¿½zï¿½ feltï¿½teleket az **OR** szï¿½ hasznï¿½latï¿½val ï¿½sszefï¿½zhetjï¿½k vagy akï¿½r az **IN** szï¿½ hasznï¿½latï¿½val fel is sorohatjuk. 
+Tehï¿½t a WHERE feltï¿½tel utï¿½n a kï¿½vetkezï¿½ kï¿½t kifejezï¿½s egyenï¿½rtï¿½kï¿½
 */
 SELECT P.ProductID, P.Name, P.Color
 FROM Production.product P
 WHERE P.Color ='Red' OR P.Color='Blue'
-/*vagy így:
+/*vagy ï¿½gy:
 WHERE P.Color IN ('Red', 'Blue')
 */
 
 /*
-Az IN szó használatakor a lehetséges értékekeket zárójelek között vesszõvel elválasztva kell felsorolni. 
-Ha számokról vagy dátumokról van szó, akkor használhatjuk a BETWEEN szót. 
-Így nem kell minden lehetséges értéket felsorolni, hanem elég az intervallumot megadni. 
-Lásd az alábbi példa.
+Az IN szï¿½ hasznï¿½latakor a lehetsï¿½ges ï¿½rtï¿½kekeket zï¿½rï¿½jelek kï¿½zï¿½tt vesszï¿½vel elvï¿½lasztva kell felsorolni. 
+Ha szï¿½mokrï¿½l vagy dï¿½tumokrï¿½l van szï¿½, akkor hasznï¿½lhatjuk a BETWEEN szï¿½t. 
+ï¿½gy nem kell minden lehetsï¿½ges ï¿½rtï¿½ket felsorolni, hanem elï¿½g az intervallumot megadni. 
+Lï¿½sd az alï¿½bbi pï¿½lda.
 */
 SELECT SOH.SalesOrderID, SOH.DueDate
 FROM Sales.salesorderheader SOH
 WHERE SOH.DueDate BETWEEN '20120301' AND '20120331'
 
 /*
-A fenti lekérdezéssel a márciusi rendeléseket kapjuk meg. 
-A BETWEEN után az értékeket aposztrofok között az AND szóval kell megadni.
-Természetesen ilyen esetekben használhatjuk a relációs jeleket is.
+A fenti lekï¿½rdezï¿½ssel a mï¿½rciusi rendelï¿½seket kapjuk meg. 
+A BETWEEN utï¿½n az ï¿½rtï¿½keket aposztrofok kï¿½zï¿½tt az AND szï¿½val kell megadni.
+Termï¿½szetesen ilyen esetekben hasznï¿½lhatjuk a relï¿½ciï¿½s jeleket is.
 */
 SELECT SOH.SalesOrderID, SOH.DueDate
 FROM Sales.salesorderheader SOH
 WHERE SOH.DueDate >= '20120301' AND SOH.DueDate < '20120404'
 
 /*
-Az AND logikai és. Tehát mindkét feltételnek teljesülnie kell. 
-Fontos, hogy a nagyobb és a nagyobb egyenlõ közti különbségekre ilyen esetben odafigyeljünk.
-Ha csak az egyes értékek egy részére szeretnénk szûrni például minden olyan termékre ami a Socks szóval kezdõdik akkor a LIKE-ot kell használnunk. 
-SQL-ben a % jel a joker karakter. Az alábbi példa minden olyan terméket kigyûjt, ahol a Name mezõben Chain-el kezdõdõ érték van.
+Az AND logikai ï¿½s. Tehï¿½t mindkï¿½t feltï¿½telnek teljesï¿½lnie kell. 
+Fontos, hogy a nagyobb ï¿½s a nagyobb egyenlï¿½ kï¿½zti kï¿½lï¿½nbsï¿½gekre ilyen esetben odafigyeljï¿½nk.
+Ha csak az egyes ï¿½rtï¿½kek egy rï¿½szï¿½re szeretnï¿½nk szï¿½rni pï¿½ldï¿½ul minden olyan termï¿½kre ami a Socks szï¿½val kezdï¿½dik akkor a LIKE-ot kell hasznï¿½lnunk. 
+SQL-ben a % jel a joker karakter. Az alï¿½bbi pï¿½lda minden olyan termï¿½ket kigyï¿½jt, ahol a Name mezï¿½ben Chain-el kezdï¿½dï¿½ ï¿½rtï¿½k van.
 */
 SELECT P.ProductID, P.Name      
 FROM Production.product P
 WHERE P.Name LIKE 'Chain%'
 
-/*Fontos hogy sok programnyelvel ellentétben SQL-ben a joker karaktert is aposztrofok közé kell tenni.
-Sok esetben elõfordul, hogy hogy nem azt az értéket szeretnénk megjeleníteni, ami az adattáblánkban van hanem a tábla tartalmától függõen valamilyen más értéket. 
-Erre használhatjuk a CASE függvényt. A CASE függvényben a CASE szó után írjuk a mezõ nevét amire a feltételeink vonatkoznak. 
-A WHEN szóval kezdjük az adott ágat, utána írjuk a feltételt majd a THEN szó után hogy mire cserélje. A CASE függvénynek lehet ELSE ága, ami minden fel nem sorolt esetet jelent. A CASE függvényt END-el zárjuk le. Az alábbi példában a neveket szeretném magyarul megjeleníteni.
+/*Fontos hogy sok programnyelvel ellentï¿½tben SQL-ben a joker karaktert is aposztrofok kï¿½zï¿½ kell tenni.
+Sok esetben elï¿½fordul, hogy hogy nem azt az ï¿½rtï¿½ket szeretnï¿½nk megjelenï¿½teni, ami az adattï¿½blï¿½nkban van hanem a tï¿½bla tartalmï¿½tï¿½l fï¿½ggï¿½en valamilyen mï¿½s ï¿½rtï¿½ket. 
+Erre hasznï¿½lhatjuk a CASE fï¿½ggvï¿½nyt. A CASE fï¿½ggvï¿½nyben a CASE szï¿½ utï¿½n ï¿½rjuk a mezï¿½ nevï¿½t amire a feltï¿½teleink vonatkoznak. 
+A WHEN szï¿½val kezdjï¿½k az adott ï¿½gat, utï¿½na ï¿½rjuk a feltï¿½telt majd a THEN szï¿½ utï¿½n hogy mire cserï¿½lje. A CASE fï¿½ggvï¿½nynek lehet ELSE ï¿½ga, ami minden fel nem sorolt esetet jelent. A CASE fï¿½ggvï¿½nyt END-el zï¿½rjuk le. Az alï¿½bbi pï¿½ldï¿½ban a neveket szeretnï¿½m magyarul megjelenï¿½teni.
 */
 SELECT P.ProductID, P.Name,
-    CASE P.Color WHEN 'Blue' THEN 'Kék'
+    CASE P.Color WHEN 'Blue' THEN 'Kï¿½k'
                  WHEN 'Red' THEN 'Piros'
-                 WHEN 'Silver' THEN 'Ezüst'
+                 WHEN 'Silver' THEN 'Ezï¿½st'
                  WHEN 'Black' THEN 'Fekete'
                  ELSE 'N/A'
-                 END as Szín
+                 END as Szï¿½n
 FROM Production.product P
 /*
-Lehetõségünk van arra is, hogy egy mezõ értékét valamilyen feltételhez kötve adjuk meg. 
-Ehhez az IIF parancsot kell használni aminek a szintaktikája IIF (feltétel, érték ha igaz, érték ha hamis). 
-Használatára lásd az alábbi példát.
+Lehetï¿½sï¿½gï¿½nk van arra is, hogy egy mezï¿½ ï¿½rtï¿½kï¿½t valamilyen feltï¿½telhez kï¿½tve adjuk meg. 
+Ehhez az IIF parancsot kell hasznï¿½lni aminek a szintaktikï¿½ja IIF (feltï¿½tel, ï¿½rtï¿½k ha igaz, ï¿½rtï¿½k ha hamis). 
+Hasznï¿½latï¿½ra lï¿½sd az alï¿½bbi pï¿½ldï¿½t.
 */
 SELECT E.LoginID, IIF(E.Gender='M', 'Male', 'Female') Gendername
 FROM Humanresources.employee E
 
 /* **************ORDER BY**************************
-A rendezés a következõ olyan funkció, amit gyakran használunk.
-Alapértelmezésként az SQL növekvõ sorrendbe rendez a megadott mezõ szerint. 
-Ha csökkenõ sorrendet szeretnénk akkor a DESC kitétel használata szükséges.
-Ha akarunk akkor rendezhetünk több szempont szerint ilyenkor a beírt mezõk sorrendjében fog rendezni a program.
-A mezõkre hivatkozhatunk a nevükkel vagy a sorszámukkal is (hányadik mezõ a SELECT-ben) Mint a alábbi példában látható.
+A rendezï¿½s a kï¿½vetkezï¿½ olyan funkciï¿½, amit gyakran hasznï¿½lunk.
+Alapï¿½rtelmezï¿½skï¿½nt az SQL nï¿½vekvï¿½ sorrendbe rendez a megadott mezï¿½ szerint. 
+Ha csï¿½kkenï¿½ sorrendet szeretnï¿½nk akkor a DESC kitï¿½tel hasznï¿½lata szï¿½ksï¿½ges.
+Ha akarunk akkor rendezhetï¿½nk tï¿½bb szempont szerint ilyenkor a beï¿½rt mezï¿½k sorrendjï¿½ben fog rendezni a program.
+A mezï¿½kre hivatkozhatunk a nevï¿½kkel vagy a sorszï¿½mukkal is (hï¿½nyadik mezï¿½ a SELECT-ben) Mint a alï¿½bbi pï¿½ldï¿½ban lï¿½thatï¿½.
 */
 SELECT P.ProductID, P.Name, P.Color
 FROM Production.product P
 ORDER BY P.name, P.Color DESC
 
-/* **************************Részhalmazok lekérdezése***************************
-Vannak olyan esetek, amikor nincs szükségünk egy lekérdezés összes adatára, hanem csak valamilyen szempont szerint az elsõ 10.
-Erre használhatjuk a TOP utasítást. Így lekorlátozni a darabszámot többnyire akkor szoktunk miután valamilyen szempont szerint már sorbarendeztük az adatainkat.
-Klasszikus példa amikor a legocsóbb termékekre vagyunk kíváncsiak. 
-Ezt fogjuk megnézni a következõ ki példában.
+/* **************************Rï¿½szhalmazok lekï¿½rdezï¿½se***************************
+Vannak olyan esetek, amikor nincs szï¿½ksï¿½gï¿½nk egy lekï¿½rdezï¿½s ï¿½sszes adatï¿½ra, hanem csak valamilyen szempont szerint az elsï¿½ 10.
+Erre hasznï¿½lhatjuk a TOP utasï¿½tï¿½st. ï¿½gy lekorlï¿½tozni a darabszï¿½mot tï¿½bbnyire akkor szoktunk miutï¿½n valamilyen szempont szerint mï¿½r sorbarendeztï¿½k az adatainkat.
+Klasszikus pï¿½lda amikor a legocsï¿½bb termï¿½kekre vagyunk kï¿½vï¿½ncsiak. 
+Ezt fogjuk megnï¿½zni a kï¿½vetkezï¿½ ki pï¿½ldï¿½ban.
 */
 SELECT TOP 10 P.name, P.ListPrice 
 FROM Production.Product P
 WHERE P.ListPrice >0
 Order BY P.ListPrice
 
-/*Másik gyakori eset amikor részhalmazra van szükség például egy webáruház oldala, amikor nem akarjuk egyszerre megjeleníteni az összes adatot, hanem egyszerre csak kevesebbet. 
-Jellemzõen 10-20 terméket mondjuk majd utána újabb 10-20 terméket. Ezt az OFFSET és FETCH parancs kombinációval tehetjük meg.
-Ahol az OFFSET után kell megadni, hogy hány rekordot nem szeretnénk látni (az utána következõtõl látjuk majd) és a FETCH után hogy hány sort jelenítsen meg.
-A következõ kis példa 25 sort fog megmutatni a 51. rekordtól.
+/*Mï¿½sik gyakori eset amikor rï¿½szhalmazra van szï¿½ksï¿½g pï¿½ldï¿½ul egy webï¿½ruhï¿½z oldala, amikor nem akarjuk egyszerre megjelenï¿½teni az ï¿½sszes adatot, hanem egyszerre csak kevesebbet. 
+Jellemzï¿½en 10-20 termï¿½ket mondjuk majd utï¿½na ï¿½jabb 10-20 termï¿½ket. Ezt az OFFSET ï¿½s FETCH parancs kombinï¿½ciï¿½val tehetjï¿½k meg.
+Ahol az OFFSET utï¿½n kell megadni, hogy hï¿½ny rekordot nem szeretnï¿½nk lï¿½tni (az utï¿½na kï¿½vetkezï¿½tï¿½l lï¿½tjuk majd) ï¿½s a FETCH utï¿½n hogy hï¿½ny sort jelenï¿½tsen meg.
+A kï¿½vetkezï¿½ kis pï¿½lda 25 sort fog megmutatni a 51. rekordtï¿½l.
 */
 SELECT P.ProductID, P.name, P.ListPrice
 FROM Production.Product P

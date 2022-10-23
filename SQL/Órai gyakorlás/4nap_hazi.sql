@@ -1,48 +1,48 @@
 
 
---Kérdezd le a S-es kék termékeket a product táblából.
+--Kï¿½rdezd le a S-es kï¿½k termï¿½keket a product tï¿½blï¿½bï¿½l.
 select P.name, P.color, P.size
 from Production.Product P
 where P.color='Blue' and P.size = 'S'
 
---Kérdezd le azokat a termékeket amiknek a nevében szerepel a bike szó.
+--Kï¿½rdezd le azokat a termï¿½keket amiknek a nevï¿½ben szerepel a bike szï¿½.
 select P.name, P.color, P.size
 from Production.Product P
 where P.name like '%bike%'
 
---Kérdezd le a piros színû termékeket és a színét írd ki magyarul.
+--Kï¿½rdezd le a piros szï¿½nï¿½ termï¿½keket ï¿½s a szï¿½nï¿½t ï¿½rd ki magyarul.
 select P.name,
 	case P.color WHEN 'Red' THEN 'Piros'
 	else ''
-	end as Szín
+	end as Szï¿½n
 from Production.Product P
 where P.color ='Red'
 
---Rendezd a termékek nevét ABC sorrendbe.
+--Rendezd a termï¿½kek nevï¿½t ABC sorrendbe.
 select P.name
 from Production.Product P
 order by P.name
 
---Kérdezd le a termékek nevét, árát és színét és rendezd listaár szerint csökkenõ sorrendbe
+--Kï¿½rdezd le a termï¿½kek nevï¿½t, ï¿½rï¿½t ï¿½s szï¿½nï¿½t ï¿½s rendezd listaï¿½r szerint csï¿½kkenï¿½ sorrendbe
 select P.name, P.ListPrice, P.Color
 from Production.Product P
 order by P.ListPrice DESC
 
 
---Kérdezd le a 100 legrégebb óta (sellstartdate) forgalmazott terméket
+--Kï¿½rdezd le a 100 legrï¿½gebb ï¿½ta (sellstartdate) forgalmazot termï¿½ket
 select P.name, P.SellStartDate
 from Production.Product P
 order by P.ListPrice DESC
 OFFSET 0 ROWS FETCH NEXT 100 ROWS ONLY
 
---Kérdezd le a 10 legolcsóbb terméket, aminek az ára nagyobb 0-nál és a neve tartalmazza a Pedal szót.
+--Kï¿½rdezd le a 10 legolcsï¿½bb termï¿½ket, aminek az ï¿½ra nagyobb 0-nï¿½l ï¿½s a neve tartalmazza a Pedal szï¿½t.
 select P.name, P.ListPrice
 from Production.Product P
 Where P.Name like '%Pedal%' AND P.ListPrice >0
 order by P.ListPrice
 OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
 
---Kérdezd le az összes nevet és megszólítást (Title) a Person táblából és fûzd össze õket, a megszólítást és a nevek között legyen egy darab köz kezeld azokat az eseteket is amikor valamely mezõ értéke NULL.
+--Kï¿½rdezd le az ï¿½sszes nevet ï¿½s megszï¿½lï¿½tï¿½st (Title) a Person tï¿½blï¿½bï¿½l ï¿½s fï¿½zd ï¿½ssze ï¿½ket, a megszï¿½lï¿½tï¿½st ï¿½s a nevek kï¿½zï¿½tt legyen egy darab kï¿½z kezeld azokat az eseteket is amikor valamely mezï¿½ ï¿½rtï¿½ke NULL.
 select PP.FirstName, PP.MiddleName, PP.LastName, PP.Title,
 CONCAT(COALESCE(PP.Title+' ',''),PP.FirstName, COALESCE(' '+ PP.MiddleName,''), ' ',PP.LastName)
 --CONCAT(COALESCE(PP.Title+' ','sb '),COALESCE(PP.FirstName+' ',''),COALESCE(PP.MiddleName+' ',''),COALESCE(PP.LastName+ ' ',''))

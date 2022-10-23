@@ -1,72 +1,72 @@
 
 /*
-Csoportosító lekérdezés (GROUP BY)
+Csoportosï¿½tï¿½ lekï¿½rdezï¿½s (GROUP BY)
 
-Az SQL lehetõséget ad arra, hogy egy tábla valamilyen mezõje szerint csoportokat alakítsunk ki, és utána az adott csoportra vonatkozóan végezzünk számításokat. 
-Csoportosítani a GROUP BY utasítással tudunk. Az alábbi kis példában megszámolju, hogy melyik productsubcategory-ba hányféle termék található.
+Az SQL lehetï¿½sï¿½get ad arra, hogy egy tï¿½bla valamilyen mezï¿½je szerint csoportokat alakï¿½tsunk ki, ï¿½s utï¿½na az adott csoportra vonatkozï¿½an vï¿½gezzï¿½nk szï¿½mï¿½tï¿½sokat. 
+Csoportosï¿½tani a GROUP BY utasï¿½tï¿½ssal tudunk. Az alï¿½bbi kis pï¿½ldï¿½ban megszï¿½molju, hogy melyik productsubcategory-ba hï¿½nyfï¿½le termï¿½k talï¿½lhatï¿½.
 */
 
-SELECT P.productsubcategoryID, COUNT(P.ProductSubcategoryID) 'termékfélék(db)'
+SELECT P.productsubcategoryID, COUNT(P.ProductSubcategoryID) 'termï¿½kfï¿½lï¿½k(db)'
         FROM Production.Product P
         GROUP BY P.ProductSubcategoryID
 
 /*
-A GROUP BY használatakor fontos kikötés, hogy a SELECT részbe csak a csoportosító mezõ és olyan mezõk lehetnek, amin valamilyen összesítõ (aggregátor) függvényt használunk. 
-Természetesen a WHERE parancsot használhatjuk és még a csoportosítás elõtt kiszûrhetjük a nekünk szükséges rekordokat. 
-A lenti lekérdezésbõl például szeretnénk eltávolítani azokat a rekordokat, amiknél nincs megadva a SubCategoryID.
+A GROUP BY hasznï¿½latakor fontos kikï¿½tï¿½s, hogy a SELECT rï¿½szbe csak a csoportosï¿½tï¿½ mezï¿½ ï¿½s olyan mezï¿½k lehetnek, amin valamilyen ï¿½sszesï¿½tï¿½ (aggregï¿½tor) fï¿½ggvï¿½nyt hasznï¿½lunk. 
+Termï¿½szetesen a WHERE parancsot hasznï¿½lhatjuk ï¿½s mï¿½g a coportosï¿½tï¿½s elï¿½tt kiszï¿½rhetjï¿½k a nekï¿½nk szï¿½ksï¿½ges rekordokat.
+A lenti lekï¿½rdezï¿½sbï¿½l pï¿½ldï¿½ul szeretnï¿½nk eltï¿½volï¿½tani azokat a rekordokat, amiknï¿½l nincs megadva a SubCategoryID.
 */
 
-SELECT P.productsubcategoryID, COUNT(P.ProductSubcategoryID) 'termékfélék(db)'
+SELECT P.productsubcategoryID, COUNT(P.ProductSubcategoryID) 'termï¿½kfï¿½lï¿½k(db)'
 FROM Production.Product P
 WHERE P.ProductSubcategoryID IS NOT NULL
 GROUP BY P.ProductSubcategoryID
 
 /*
-Hogy még több infót adjon a lekérdezésünk lehetõségünk van további információkat kiszámolni. 
-Például a legolcsóbb, a legdrágább termékek árát valamit a csoportonként a termékek átlagárát. 
-Ehhez a MIN() (legkisebb érték), a MAX() (legnagyobb érték) és a AVG() (átlag) fügvényeket fogjuk használni.
+Hogy mï¿½g tï¿½bb infï¿½t adjon a lekï¿½rdezï¿½sï¿½nk lehetï¿½sï¿½gï¿½nk van tovï¿½bbi informï¿½ciï¿½kat kiszï¿½molni. 
+Pï¿½ldï¿½ul a legolcsï¿½bb, a legdrï¿½gï¿½bb termï¿½kek ï¿½rï¿½t valamit a csoportonkï¿½nt a termï¿½kek ï¿½tlagï¿½rï¿½t. 
+Ehhez a MIN() (legkisebb ï¿½rtï¿½k), a MAX() (legnagyobb ï¿½rtï¿½k) ï¿½s a AVG() (ï¿½tlag) fï¿½gvï¿½nyeket fogjuk hasznï¿½lni.
 */
 
 SELECT  P.productsubcategoryID, 
-        COUNT(P.ProductSubcategoryID) 'termékfélék(db)', 
-        MIN(P.Listprice) legolcsóbb,
-        MAX(P.Listprice) legdrágább,
-        AVG(P.ListPrice) átlagár
+        COUNT(P.ProductSubcategoryID) 'termï¿½kfï¿½lï¿½k(db)', 
+        MIN(P.Listprice) legolcsï¿½bb,
+        MAX(P.Listprice) legdrï¿½gï¿½bb,
+        AVG(P.ListPrice) ï¿½tlagï¿½r
 FROM Production.product P
 WHERE P.ProductSubcategoryID IS NOTt NULL
 GROUP BY P.ProductSubcategoryID
 HAVING
 
 /*
-Mivel a fenti lekérdezésben az összesítõ függvényeknek nincs értelme akkor, ha az adott kategóriában csak 1 termék van. 
-Így azokat szeretném eltávolítani. A GROUP BY által képzett csoportokra vonatkozóan a HAVING paranccsal tudunk szûrõfeltételeket megadni. 
-Hasonlóan mûködik mint a WHERE feltétel csak a csoportokra vonatkozik. Ezzel kapcsolatban fontos kikötés, 
-hogy a SELECT részben létrehozott aliasokat a HAVING részben nem használhatjuk mert bár a SELECT szintaktikailag megelõzi a HAVING-et. 
-A végrehajtási sorrendben a HAVING hamarabb hajtódik végre ezért olyankor még a SELECT-ben létrehozott aliasok nem léteznek. 
-Ezért a HAVING részben ki kell számoltatnunk az értékeket.
+Mivel a fenti lekï¿½rdezï¿½sben az ï¿½sszesï¿½tï¿½ fï¿½ggvï¿½nyeknek nincs ï¿½rtelme akkor, ha az adott kategï¿½riï¿½ban csak 1 termï¿½k van. 
+ï¿½gy azokat szeretnï¿½m eltï¿½volï¿½tani. A GROUP BY ï¿½ltal kï¿½pzett csoportokra vonatkozï¿½an a HAVING paranccsal tudunk szï¿½rï¿½feltï¿½teleket megadni. 
+Hasonlï¿½an mï¿½kï¿½dik mint a WHERE feltï¿½tel csak a csoportokra vonatkozik. Ezzel kapcsolatban fontos kikï¿½tï¿½s, 
+hogy a SELECT rï¿½szben lï¿½trehozott aliasokat a HAVING rï¿½szben nem hasznï¿½lhatjuk mert bï¿½r a SELECT szintaktikailag megelï¿½zi a HAVING-et. 
+A vï¿½grehajtï¿½si sorrendben a HAVING hamarabb hajtï¿½dik vï¿½gre ezï¿½rt olyankor mï¿½g a SELECT-ben lï¿½trehozott aliasok nem lï¿½teznek. 
+Ezï¿½rt a HAVING rï¿½szben ki kell szï¿½moltatnunk az ï¿½rtï¿½keket.
 */
 
 SELECT  P.productsubcategoryID, 
-        COUNT(P.ProductSubcategoryID) 'termékfélék(db)', 
-        MIN(P.Listprice) legolcsóbb,
-        MAX(P.Listprice) legdrágább,
-        AVG(P.ListPrice) átlagár
+        COUNT(P.ProductSubcategoryID) 'termï¿½kfï¿½lï¿½k(db)', 
+        MIN(P.Listprice) legolcsï¿½bb,
+        MAX(P.Listprice) legdrï¿½gï¿½bb,
+        AVG(P.ListPrice) ï¿½tlagï¿½r
 FROM Production.Product P
 WHERE P.ProductSubcategoryID IS NOT NULL
 GROUP BY P.ProductSubcategoryID
 HAVING COUNT(P.ProductSubcategoryID) > 1
 
 /*
-Végül pedig, hogy rendezettebb képet kapjunk kiegészíthetjük a legkérdezésünket mondjuk egy sorbarendezéssel ORDER BY parancs. 
-Amit érdemes megfigyelni, hogy itt már használható a SELECT-ben létrehozott aliasok mivel az ORDER BY viszont a SELECT után hajtódik végre.
+Vï¿½gï¿½l pedig, hogy rendezettebb kï¿½pet kapjunk kiegï¿½szï¿½thetjï¿½k a legkï¿½rdezï¿½sï¿½nket mondjuk egy sorbarendezï¿½ssel ORDER BY parancs. 
+Amit ï¿½rdemes megfigyelni, hogy itt mï¿½r hasznï¿½lhatï¿½ a SELECT-ben lï¿½trehozott aliasok mivel az ORDER BY viszont a SELECT utï¿½n hajtï¿½dik vï¿½gre.
 */
 SELECT  P.productsubcategoryID, 
-        COUNT(P.ProductSubcategoryID) 'termékfélék(db)', 
-        MIN(P.Listprice) legolcsóbb,
-        MAX(P.Listprice) legdrágább,
-        AVG(P.ListPrice) átlagár
+        COUNT(P.ProductSubcategoryID) 'termï¿½kfï¿½lï¿½k(db)', 
+        MIN(P.Listprice) legolcsï¿½bb,
+        MAX(P.Listprice) legdrï¿½gï¿½bb,
+        AVG(P.ListPrice) ï¿½tlagï¿½r
 FROM Production.Product P
 WHERE P.ProductSubcategoryID is not NULL
 GROUP BY P.ProductSubcategoryID
 HAVING COUNT(P.ProductSubcategoryID) > 1
-ORDER BY átlagár
+ORDER BY ï¿½tlagï¿½r
