@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+ webserver:
+    build: .
+    volumes:
+      - ./db.json:/db.json
+    #scale: 4
+    ports:
+      - "3000:3000"
+    networks:
+      - the3000-network
+ client:
+    image: nginx
+    volumes:
+      - ./frontend/:/usr/share/nginx/html
+    ports:
+      - "8080:80"
+    networks:
+      - the3000-network
+networks:
+  the3000-network:

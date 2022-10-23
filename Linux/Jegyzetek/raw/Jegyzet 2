@@ -1,0 +1,153 @@
+Linux alapok III.
+Felhasználók és csoportok kezelése
+felhasználók listája: a /etc/passwd fájlban
+
+a passwd fájl oszlopai:
+1 felhasználónév
+2 jelszó ha x az érftéke akkor titkosítva található meg a /etc/shadow fájlban
+3 userid
+0 mindig a root-é
+1-99 fentartva előre meghatározott accountoknak például 5 játékok :D
+100-999 a rendszer foglalja őket adminisztratív és rendszer usereknek és csoportoknak például 104 syslog
+4 groupid
+a felhasználó elsődleges csoportjának azonosítója
+csoportid-k az /etc/group fájlban találhatóak
+5 userid info megjegyzés mező
+6 home directory
+command/shell az adott accounthoz tartozó parancs vagy shell abszolút elérési útja
+például /bin/bash
+bizonyos accountokkal nem lehet belépni például games ezeket a /sbin/nologin könyvtárba irányítja és ha ezekkel megpróbálnak belépni akkor leállítja a kapcsolatot 
+useradd
+-d - HOME könyvtár megadása
+-e - expiredate - megadhatunk egy elévülési dátumot a felhasználónak
+https://unix.stackexchange.com/a/80971
+-g - group - megadhatjuk a felhasználónk alapértelmezett group-ját, amennyiben ezt elhagyjuk, akkor default beállításként a nevével létre fog jönni egy group
+példa: sudo useradd stuser -g grouptest
+-G - vesszővel elválasztva több csoportot is megadhatunk
+-m - create-home - defaultból csak az első loginnál hozná létre a home könyvtárat, ezzel viszont azonnal megtörténik
+-p - password - jelszó megadása (használata nem javasolt a bash historyból kinyerhető a jelszó)
+/etc/skel/ új felhasználók home könyvtárának alapja
+/etc/shadow/ felhasználói jelszavak titkosítva
+
+usermod:
+
+az adott account tulajdonságait tudjuk módosítani a segítéségével
+-g a felhasználó elsőgleges csoportját módosítja a csoportnak léteznie kell
+-G a felhasználó másodlagos csoporttagságait tudjuk változtani
+-l a login nevet módosíthatjuk vele minden más marad
+
+
+groupadd
+groupadd my-group
+deluser, delgroup
+--remove-home home mappa törlése (csak ha nincs szükség az adatokra)
+--remove-all-files (minden egyéb felhasználói beállítást fájlt is töröl)
+--backup (biztonsági mentést csinál a felhasználó adatairól
+
+chown
+change user ownership
+- chown felhasználónév fájlnév a tulajdonosi jogot kapja meg a felhasználó
+- chown felhasználónév:csoportnév fájlnév a tulajdonos felhasználót és csoportot is módosítja
+- tulajdonost csak root felhasználó tud módosítani
+-R - rekurzív
+chgrp
+change group ownership
+chgrp csoportnév fájlnév
+-R - rekurzív
+Admin jog
+su root felhasználóra vált tudni kell a root felhasználó jelszavát
+su parancs:
+felhasználó váltás
+ne lépj be root felhasználóval
+sudo su root felhasználóra váltás
+sudo
+adott parancsot admin joggal futatja ha a felhasználó sudoer a felhasználó saját jelszavát kéri
+5 percig nem kéri a jelszót megadás után
+- env parancsal ellenőrizhető kinek a nevében vagyunk bejelentkezve
+sudo -i root felhasználóra vált a felhasználó jelszavát kéri
+sudo -k -i root felhasználóra vált de az 5 perces jelszónélküliséget törli
+
+
+   
+   
+sudoers - viSudo (sudo jogosultságokat tartalmazó fájl és szerkesztésük)
+szerkeszteni a sudo vi /etc/sudoers parancsal lehet. A vi szerkesztő egy szintaktikai ellenőrzést csinál. Logikai hibákat nem javítja
+root   ALL=(ALL:ALL) ALL The first field indicates the username that the rule will apply to (root).
+root ALL=(ALL:ALL) első ALL honnan léphet be
+root ALL=(ALL:ALL) második ALL kinek a nevében ténykedhet
+ root ALL=(ALL:ALL) harmadik ALL ha van akkor mely csoport nevében ténykedhet
+root ALL=(ALL:ALL) ALL utolsó ALL mit tehet
+
+hálózat monitorozás
+ifconfig
+
+Nem biztos, h alapból a disztribúció része, ha esetleg mégsem, akkor:
+sudo apt install net-tools
+Hálózati eszközöket tudjuk vele kezelni, kapcsolók nélkül használva kilistázza az összes eszköz státuszá
+
+iwconfig
+vezeték nélküli eszközöket lehet vele konfigurálni
+virtuális gépen nem működik mivel a hosttól kapja a hálózatot
+ iwlist
+virtuális gépen nem működik mivel a hosttól kapja a hálózatot
+iwlist wlp3s0 scanning
+kilistázza ( részletesen ) az elérhető WiFi hálózatokat a megadott interfészen
+ip
+az ifconfig parancsot hivatott leváltani, sokkal széleskörűbb tudással rendelkezik
+hálózati adapter ki-bekapcsolása:
+ip link set wlp3s0 upls
+ip link set wlp3s0 down
+
+
+nmcli network-manager cli (WSL-en nem működik mert nem ad hozzáférést az interface tulajdonságokhoz. Hyper-V alatt fut)
+általában nem beépített a rendszerben
+sudo apt install network-manager 
+Ez egy háttérben futó szolgáltalás lesz a linux alatt, a CLI-n keresztül tudunk kommunikálni vele
+sudo systemctl status NetworkManager
+rengeteg toolt tartalmaz, nem térünk ki mindenre, lehet bogarászni
+Ezen keresztül is tudjuk állítgatni a hálózati eszközeinket
+nmcli r wifi on
+segítségével ki tudjuk listázni az elérhető WiFi kapcsolatokat
+sudo nmcli dev wifi
+sudo nmcli r wifi list
+Majd miután megtaláltuk ezeket, tudunk csatlakozni is hozzájuk:
+nmcli d wifi connect my_wifi password <password>
+Csatlakozás rejtett SSID-jű WiFi-hez:
+nmcli c add type wifi con-name <name> ifname wlan0 ssid <ssid>
+nmcli c modify <name> wifi-sec.key-mgmt wpa-psk wifi-sec.psk <password>
+nmcli c up <name>
+iftop
+
+Adminisztrátori joggal indítható csak
+A teljes hálózati forgalmat nyomon tudjuk vele követni
+-i kapcsolóval meghatározhatjuk a monitorozandó hálózati eszközt
+sudo iftop -i eszköznév
+rendszerállapot monitorozása
+ps
+pillanatképet ad vissza a jelenlegi folymatokról
+
+kill
+bármilyen folyamatot lelőhetünk vele
+free
+szabad memória terület
+
+df
+szabad lemezterület
+-h kapcsoló javasolt
+top/htop
+interaktív folyamatfigyelő
+user monitorozás
+id
+felhasználói információk
+id aktuális fehasználó csoporttagságai
+id <user>  megjelölt felhasználó adatai
+
+whoami
+jelenelgi user
+
+groups
+saját csoportjaimat adja vissza
+w
+ki van bejelentkezve, és éppen mit csinál
+-u kapcsolóval még több információt elérhetünk
+hálózati környezetben van értelme

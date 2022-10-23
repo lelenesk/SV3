@@ -1,0 +1,177 @@
+Linux alapok és bash script
+rendszerállapot monitorozása
+ps
+pillanatképet ad vissza a jelenlegi folymatokról
+kill
+bármilyen folyamatot lelőhetünk vele
+lsof - list open files
+-i kapcsolóval pl tudunk portra szűrni
+lsof -i :3306
+free
+szabad memória terület
+df
+szabad lemezterület
+-h kapcsoló javasolt
+top/htop
+interaktív folyamatfigyelő
+-n 1 -b
+top -p 
+journalctl logolás
+wsl alatt nem megy hyper-v alatt igen
+hardver monitorozás:
+lsusb
+usb-s eszközkről ad infót virtuális gépen nem talál egyet sem
+
+lspci
+hardware információkat ad
+
+-v bővebb -vv még bővebb infók
+
+wsl-en nem megy hyper-v-n igen
+
+lshw
+hardware eszközkről ad infótif
+
+-short fa szerű megjelenítés
+
+sudo lshw -c network
+egyéb hasznos eszközök:
+man parancsnév: az adott parancs manualjat mutatja meg
+közel minden használt parancshoz tartozik egy manual
+
+man iwconfig
+
+find
+fájlkeresés linux alatt
+
+-perm jogokra szűr
+
+-name névre szűr
+
+-size méretre szűr
+
+loadkeys hu magyar billentyűkiosztásra váltás sudo kell hozzá
+
+history megmutatja a kiadott parancsok listáját
+
+-d sorszám adott sorszámú bejegyzést törli
+
+-c a teljest history-t törli
+
+aliasok létrehozása:
+gyakran használt parancsok kiadását egyszerüsíti
+
+felhasználó home könyvtárában a .bashrc-ben lehet beállítani szövegszerkesztővel
+
+a létrehozás utáni első bejelentkezés után fognak élni az aliasok addig nem
+
+type és parancs neve megmondja a típusát
+
+echo $? 
+a program visszatérési értékét mutatja meg egy parancs kiadása után
+
+a 0 helyes futást jelent minden más érték hibát jelez hogy pontosan milyen hibát azt a parancs man oldalán lehet megtudni
+
+
+Bash szkript készítés
+egy szöveges fájl ami parancsokat tartalmaz ezzel automatizálható gyorsítható a munka
+shebang line #!/bin/bash ez a sor határozza meg hogy milyen utasításkészletet használ a szkript a bash és az sh szinte minden linux verzióban elérhető
+a szkriptek paraméterezhetőek ezt a fájl neve után kell beírni
+ változókat használhatunk a szkriptben aminek az értéke lehet egy utasítás eredménye, de be is kérhetjük a felhasználótól
+a scriptet megírása után futtathatóvá kell tenni például a chmod paranccsal
+értékadás változónak
+számot adunk értéknek változó neve=1
+
+szöveget adunk értéknek változó neve=’szöveg’
+
+valamilyen parancs kimenetét adjuk értéknek változó neve=$(parancs és paraméterei) vagy változó neve=`parancs és paraméterei`
+
+értékbekérés a felhsználótól: read változó neve
+
+hivatkozás a változóra: $változó neve
+"beépített" változók
+
+#Ezzel, a paraméterként kapott változókra tudunk hivatkozni   
+
+$1, $2... ${10} utasításokkal tudunk hivatkozni rájuk
+#!/bin/bash echo "Hello, ${1}!”
+./greet.sh Attila
+"beépített" változók
+
+#Ezzel, a paraméterként kapott változókra tudunk hivatkozni   
+
+$1, $2... ${10}
+
+#!/bin/bash echo "Hello, ${1}!”
+
+./greet.sh Attila
+
+#Ezzel megkaphatjuk, a rendelkezésre álló paramétereket, amiket kaptunk (darabszámát)
+
+$#
+
+ciklusok
+for (egy bizonyos intervallumon belül csinálja meg ismétlődően az utasítást)
+#!/bin/bash
+for i in `seq 1 10` ( a seq a változó  értékét növeli egyel)
+do
+   echo $i (echo kiírja a képernyőre a szöveget, változó értékét)
+done (a done utasítás zárja le a for ciklust)
+while (addig hajtja vére az utasítást amíg a feltétel teljesül)
+
+#!/bin/bash
+echo ‘meddig számoljak?’ (echo
+read szam (read egy értéket kér be a felhasználótól)
+ i=1
+while [$i -lt $szam] (csinál addig amíg i változó értéke kisebb mint a szám változó értéke)
+do
+    echo $i
+    i=$((i+1)) (i változó értékét növeli eggyel)
+done (a done utasítást zárja le a while ciklust)
+
+feltételek
+
+-eq # egyenlő
+-lt # lesser-then/kisebb mint
+-gt # greater-then/nagyobb mint
+
+Elágazások
+
+if  then else
+
+    ha a feltétel teljesül csinálj valamit
+példa:
+
+#!/bin/bash
+echo ‘add meg az első számot’
+read elso
+echo ‘add meg a második számot’
+read masodik
+if [ $elso -gt $masodik ] (if ha a feltétel teljesül csináld a then utáni utasításokat)
+then echo ‘az első szám nagyobb’
+exit 0 (leállítja a scriptet 0 visszatérési értékkel ami a sikeres futást jelenti)
+elif [ $elso -lt $masodik ] (az elif új ágat nyit az elágazásban szintén a then utáni utasításokat csinálja meg a script)
+then
+echo ‘az első szám kisebb
+else (ha a feltétel nem teljesül akkor ezt csináld)
+echo ‘a két szám egyenlő’
+ fi (lezárja az if elágazást)
+case:
+
+szintén elágazás ha a feltétel teljesül csináld meg (abban az esetben)
+
+#!/bin/bash
+echo "[O]lvas"
+echo "[H]ozzáfűz"
+echo "[S]zerkeszt
+read menupont
+case "$menupont" in
+"O" | "o") ( a pipe jel | azt jelenti, hogy egyik vagy másik esetben a zárójel zár lezárja a feltételt)
+echo "olvasási műveletek"
+;; (lezárja az ágat)
+"H" | "h")
+echo "hozzáfűzési műveletek"
+;;
+"S" | "s")
+echo "Szerkesztési "
+;;

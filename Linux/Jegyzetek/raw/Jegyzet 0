@@ -1,0 +1,140 @@
+Linux alapok I.
+Linux előnyei:
+ingyenes
+nyílt forráskódú, akár a kernel is továbbfejleszthető
+nagyon jól testreszabható
+kicsi a kernellel verziók is léteznek
+van grafikus felülete is, de inkább csak kliens oldalon használják
+hatalmas közösség fejleszti, akik gyakorlatilag ingyen adnak 7/24-es supportot fórumokon
+rengeteg infó érhető el róla a neten
+kevésbé célpontja a rosszindulatú támadásoknak
+nagyon jól optimalizálható
+Linux hátrányai:
+nincs mögötte jogilag számonkérhető cég
+sok verzió/disztribúció létezik ahol a parancsokban vannak eltérések
+mivel többet enged ezért könnyebb használhatatlanná tenni
+több tudást igényelhet
+valami teljesen új amit meg kell tanulni
+Linux alapvető parancsok:
+Ctrl+c billentyűkombináció futtatás megszakítása
+sudo:
+superuser do ezzel lehet admin joggal csinálni dolgokat egy paranncsal ha a usernek van sudo joga
+fontos hogy használatakor az aktuális felhasználó jelszavát kéri
+könyvtár műveletek
+Akárcsak az MS termékeknél Linux esetében is megkülönböztetünk abszolút és relatív elérési utat. Abszolút elérési utat a gyökérkönyvtártól kell megadni a relatív elérési utat pedig az aktuális könyvtártól.
+
+cd change directory átlépés másik könytárba
+cd / root könytárba lépés
+cd  ~  home könyvtárba lépés
+cd .. egy szinttel feljebb lépés
+abszolút (/-el kezdődik) relatív útvonal
+cd - előző könyvtárba ugrik 
+ls: adott könyvtár tartalmának listázása
+ls -l listázva mutatja
+ls -a mindent mutat rejtett fájlokat is
+ls -h human readable olvashatóbb formában mutatja 
+ls -lah ultimate :D
+mkdir mappa létrehozás
+példa mkdir testmappa
+pwd megadja az aktuális helyünk abszolút elérési útját
+rm törlés 
+
+paraméterek nélkül fájltörlésre való példa rm testfile.txt
+-R könytár törlését teszi lehetővé rm -R könytárnév
+több leírásban még az olvasható, hogy csak üres mappát töröl. WSL-ben kérdés nélkül töröl akkor is ha van fájl a mappában
+
+f paraméterrel kérdés és figyelmeztetés nékül töröl
+gyakran használt kombináció az rm -rf (rekurzívan visszakérdezés nélkül töröl)
+linux könytárszerkezete:
+bin: felhasználó által indítható alap és telepített programok
+boot: grub2 és a kernel fájljait tartalmazza
+dev: eszközök eszközfájljai, indításkor generálódnak kikapcsolás után üres
+etc: konfigurációs fájlok 
+lib: közös fájlok mint windowsban a dll fájlok
+media: ma már nem használják
+mnt: ideiglenesen csatolt eszközökhöz kell például pendrive
+opt: néhány program ide települ
+proc: kernelváltozókat tartalmazza futásidőben, nem szabad írni bele
+root: rendszergazda könytára
+run: futó folyamatok adatait tartalmazza futásidőben
+srv: szerverfolyamatok megosztásait szokás ide rakni még most kezd elterjedni a használata
+sys: eszközök adatait tartalmazza futásidőben
+usr: telepített programok kerülnek ide
+var: logok és ideiglenes tárolás, sok írás történik ide 
+fájl műveletek
+touch fájl létrehozása meglévő fájl időbélyegét módosíthatjuk
+cp másolás: 
+cp mit hova példa cp testfile1.txt testdir1
+ha a célkönyvtár nem létezik akkor létrehozza
+paraméter nélkül csak fájl másolását teszi lehetővé és felülírja a célkönytárban lévő verziót
+-i (interactive) paraméterrel rákérdez, hogy felülírja-e
+-n paraméterrel megtiltjuk hogy felülírja a már létező fájlt
+-r paraméterrel könytárat is másolhatunk
+-u (update) paraméterrel csak akkor írja felül a célfájlt ha a forrásfájl újabb
+-a paraméterrel mindent másol rekurzívan
+mv áthelyezés/átnevezés
+ha másik fájlnevet adunk meg akkor átnevez
+file kiírja a file típusát
+find - keresés
+- /somewhere - keresés gyökerét meg kell adjuk 1. paraméterként
+- -type f / d (file / directory)
+- -name névre keresés, akár joker karakterek segítségével
+
+
+Linux fájlrendszerek
+Linux fájlrendszerek
+Linux által használt fájlrendszer
+A legtöbb Linux disztribúció ma már alapból ext4 fájlrendszert használja. A 4-es a verzióját jelöli, de vajon mi volt előtte? Miért lehetett szükség újabb és újabb verziókra, és mit tud a 4-es, amit a 3-as nem tudott?
+
+Mi is az a fájlrendszer?
+Ha a digitális adattárolást a legprimitívebb szinten nézzük meg, akkor igazából nincs másról szó, mint egyesek, és nullák sorozatáról, egy lemezen vagy valamilyen tárolón. Minden ilyen 1-es és 0 egy fix helyen van valahol a tárolón, de azért, hogy ez beazonosítható legyen ezek megvannak címezve. Ez a címzés többnyire az alapján történik, hogy hány "számnyira", bitnyire van a tároló legelső elemétől. A fájlrendszerekre azért van szükség, hogy ezeket az adatokat egy magasabb szinten, optimális módon, hatékonyan tudjuk kezelni, enélkül a tárolón tárolt adat csak egy nagy összefüggő adatfolyam lenne, és közel lehetetlen lenne megállapítani hol kezdődik az egyik fájl, és hol ér véget a másik. Azzal, hogy ezeket az adatokat apró egységekre, blokkokra osztjuk, és ezeket elnevezzük, felcímkézzük, lehetőségünk van rá, hogy könnyen és gyorsan azonosítsuk a szükséges adatokat. A struktúrális, és logikai szabályok, amik szerint kezeljük ezeket az adatokat, fájlokat nevezzük fájl rendszernek.
+
+Rengeteg különböző fájlrendszer létezik. Ezek különbőző struktúrát, vagy logikát használhatnak, eltérhetnek sebességben, rugalmasságban, biztonságban, támogatott méretekben stb. Egyesek bizonyos körülmények között sokkal jobban működnek mint egy másikban. Ebből kifolyólag nincs olyan, hogy a "legjobb fájlrendszer". Természetesen az újabb verziók, változatok általában többet tudnak, biztonságosabbak, megbízhatóbbak, mint régebbi társaik. Professzionális felhasználásnál célszerű lehet a fájlrendszerünket a körülményeknek megfelelően megválasztani. A továbbiakban a teljesség igénye nélkül a legfontosabb fájlrendszerekről fogok írni a teljesség igénye nélkül. A következő linken van egy elég jó blogbejegyzés a fájlrendszerekről: https://blog.desdelinux.net/hu/sistemas-archivos-cual-elegir-discos-particiones-linux/
+
+
+
+Kis történelem:
+MINIX
+Még az ext fájlrendszer megjelenése előtt a MINIX volt használatos. Ez egy nagyon kicsi, Unix-szerű operációs rendszer volt még 1987-ben. Az ő saját fájlrendszerét pedig szintén MINIXnek nevezték. Ez egy széleskörűen elterjedt OS volt akkoriban. Egy ilyen gépen kezdte el fejleszteni Linus Torvalds az eredeti Linux kernelt is, amit 1992-ben adott ki.
+
+MINIX-ról:
+- Maximum 14 karakteres fájlneveket volt képes kezelni
+- Maximum 64MB tárhelyet volt képes kezelni (Az akkori HDD-k már 40-140MB körül mozogtak)
+
+ext
+1992-ben indult útjára, és a MINIX hibáit hivatott elsősorban javítani. Itt került bevezetésre a VFS, virtuális fájlrendszer. Ez egy ami egy absztrakciós szintet jelent egy bázis fájlrendszer felett. A VFS célja az volt, hogy a kliensek, felhasználók több féle fájlrendszert tudjanak kezelni azonos módon. Ez egy interfészt biztosított a kernel és a konkrét fájlrendszer között.
+
+ext-ről:
+- Maximum 255 karakteres fájlneveket volt képes kezelni
+- Maximum 2GB tárhelyet volt képes kezelni.
+- Primitív időbélyeg kezelés a fájloknál
+
+ext2
+Kb. egy évvel később jött az utódja, az ext2. Mivel az ext-nek az alapját a MINIX képezte, rájöttek, hogy ez hosszútávon nem lesz kifizetődő, ezért nulláról újraírták az egészet. Az ext2-t ipari-szintű fájlrendszernek szánták. Fun fact: A MINIX is lecserélte a saját fájlrendszerét ext2-re.
+
+ext2-ről:
+- Akár több TB-os fájlrendszerek
+- Akár több GB-os fájlok kezelése
+- Több időbélyeg kezelése a fájloknál: Created-Modified-Accessed
+- Nagyon hajlamos volt az adatvesztésre, vagy akár a teljes fájlrendszer meghibásodására egy esetleges áramszünet esetén (habár ez jellemző volt az összes akkori fájlrendszerek többségére egyaránt)
+- Hajlamosak voltak jelentős lassulásra amennyiben az adatok "töredezetté" váltak. Ez röviden azt jelenti, hogy egy összefüggő adat (egy fájl) darabjai a tároló különböző, távoli pontjain találhatóak, így lassítva annak beolvasását.
+
+ext3
+2001-ben került bevezetésre a Linux kernelbe. Jelentős újításokat, javításokat hozva. Bevezetésre került az úgynevezett journaling. Ez egy elkülönített rész a lemezen, ahová a fájlokat úgynevezett tranzakciókba írjuk. Amennyiben a tranzakció sikeresen befejeződik, akkor a bele írt adatot "lezárjuk, véglegesítjük" a tárolón. Ha írás közben bármi hiba történik, például egy áramszünet, a következő rendszerindításnál ezt a rendszer felismeri, és rollback-eli, visszagörgeti, mintha meg sem történt volna. Ezáltal, bár az írás alatt lévő fájl elveszhet (és valószinűleg el is veszett), de a lemezen tárolt többi adat sértetlen és biztonságban van. Három különböző journaling-et különböztetünk meg a Linuxban: journal, ordered(ez a default) és writeback. Ezeknél az elsődleges különbség balról jobbra, hogy a biztonságot áldozzuk fel a sebességért cserébe.
+
+ext3-ről:
+- Akár 16TB-os fájlrendszerek
+- Akár 2TB-os fájlok kezelése
+
+ext4
+2006-ban mutatták be, két évvel később került be a Linux kerneljébe. Az elődjére épített, de hozott néhány újítást, javítást. Például még nagyobb tárhelyeket, fájlokat támogat, ellenállóbb a fájl-töredezettségnek, gyorsabb és tovább javították az idő-bélyegzést a fájlokon (a másodpercet leváltotta a nano-szekundum pontosság)
+
+Néhány egyéb fontosabb újítás:
+
+- Akár 1 EB 1018 fájlrendszerek
+- akár 16 TB-os fájlok
+- Visszafelé kompatibilitás
+- Hely előre-lefoglalás fejlesztése
+- Végtelen alkönyvtárak száma (az előd mindössze 32000-ig támogatta)
+- Journaling továbbfejlesztése
+- Töredezettségmentesítés felcsatolt állapotban (Ezt az elődjei nem támogatták közvetlenül)

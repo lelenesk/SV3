@@ -1,0 +1,75 @@
+Linux alapok II.
+Szövegszerkesztők
+mcedit fájlnév  - létrehozza a fájlt és szövegszerkesztő felületet ad
+nano fájlnév - megnyit egy fájlt és szövegszerkesztő felületet ad
+midnight commander nortoncommanderhez hasonló fájlkezel
+Joker karakterek
+
+* 0 vagy több bármilyen karakter
+? 1 db bármilyen karakter
+[abcde] egy a felsorolt karakterekből
+[a-d] egy a karakter intervallumból (a számok is ide tartoznak)
+{alfa, beta} egy szó a listából
+Szöveg műveletek
+cat valamilyen szöveg kiírása
+ha több fájlt adunk meg akkor képest őket összefűzni és belőlük új fájlt létrehozni
+példa cat forrasfajl1.txt forrasfajl2.txt >osszefuzottfajl.txt
+tac egy fájl tartalmát fordított sorrendben ír ki
+more: egy fájl tartalmát oldalakra tördelve jeleníti meg 
+következő oldal space billentyű
+kilépés q billentyűvel
+grep 
+keresés egy adott fájlban
+grep keresett szöveg fájl neve
+azokat a sorokat adja vissza amelyekben a keresett szó megtalálható
+-r rekurzívan az adott mappában található minden fájlban keres
+tail x egy fájl utolsó x sorát írja ki
+példa: tail -5 testfile.txt a fájl utolsó 5 sorát mutatja
+-f paraméter: folyamatosan figyeli a fájl végét, logfájlok figyelésénél használható
+head x egy fájl első x sorát írja ki
+példa: head -5 testfile.txt a file első 5 sorát mutatja
+wc megszámolja egy fájl tartalmát:
+l sorok száma
+c karakterek száma
+w szavak száma
+cut egy adott szöveget feldarabolhatunk vele és utána a megadott résszel dolgozhatunk tovább
+-f hányadik darabját szeretnénk az adott szövegnek
+- d mi legyen az elválasztó karakter a feldaraboláskor (delimiter)
+példa: cat fájlnév | cut -f3 -d” “ kiírja a fájl 3 oszlopát ha a delimiter a köz “ “
+echo:
+standard kimenetre ír ki egy karakterláncot
+kacsacsőrrel fájlba irányítható
+\n új sorba írja az után lévő szöveget
+parancsok összefűzése
+futó programokat nevezzük folyamatnak
+pipeolás ( | ): 
+átirányítja egy parancs eredményét egy következő parancsnak
+egy parancs eredményének fájlba írása
+> egy parancs eredményét fájlba írja ha a fájl már létezett akkor felülírja
+>> egy parancs eredményét hozzáfűzi a fájl korábbi tartalmához
+< program bemenetére irányitja a fájlt cat < fájlnév 
+Fájlok, mappák jogosultságainak módosítása:
+chmod paranccsal:
+chmod opció jogosultság file vagy mappa
+fontosabb opciók:
+R rekurzív minden a adott mappa alatt lévő mappára és fájlra kiterjed
+jogosultságot lehet adni számkóddal vagy karakteresen
+oktálisan nézzük:
+4 olvasási jog r
+2 írási jog w
+1 futtatási jog x
+a számok összegét kell megadni jogosultsági csoportonként:
+pl.: chmod -R 764 testdirectory
+a fájl tulajdonosa mindent csinálhat 4+2+1=7
+a csoport írhatja és olvashatja 4+2=6
+mindenki más csak olvashatja a testlabdirectory-t és a benne lévő összes fájlt és mappát
+karakteresen:
+u user
+g group
+o other
+a célcsoport összevonható egy parancsba például go csoport és mások
+jogosultság adása + jellel
+elvétele - jellel
+chmod kinek milyen jogot fájlnév
+chmod g-rx fájlnév elveszi az írási és futtatási jogot
+chmod go -r fájlnév elveszi az olvasási jogot a csoporttól és a többi felhasználótól

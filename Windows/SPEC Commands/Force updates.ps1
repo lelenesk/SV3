@@ -1,0 +1,1 @@
+﻿gpupdate /force #fájlmegosztások új beállításainak érvényesítése (kényszerített)  CMD-be írd

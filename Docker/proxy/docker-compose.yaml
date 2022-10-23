@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+ proxy: 
+    build: ./proxy
+    ports:
+      - "80:80"
+    networks:
+      - theproxy-network
+ frontend:
+    image: nginx:1.23.0-alpine
+    volumes:
+      - ./frontend/:/usr/share/nginx/html
+    networks:
+      - theproxy-network
+    deploy:
+      replicas: 4
+ backend:
+    build: ./server
+    volumes:
+      - ./server/db.json:/db.json
+    networks:
+      - theproxy-network
+networks:
+  theproxy-network:
