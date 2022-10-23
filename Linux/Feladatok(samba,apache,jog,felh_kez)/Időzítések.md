@@ -27,7 +27,7 @@ crontab -r
 #Linux időzítés
 Cron, crontab, at parancs alapok
 
-#Időzítés linuxban
+##Időzítés linuxban
 At parancs
 #Egy alapértelmezésben nem telepített időzítő program, ami egyszeri időzítést tesz lehetővé. Tehát megmondhatjuk vele, hogy mikor fusson le az adott program vagy script.
 
